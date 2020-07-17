@@ -1,1 +1,65 @@
+div + h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
+label {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+h3 {
+  padding: 30px 0px 0px;
+}
+
+.container {
+  margin-bottom: 20px;
+}
+
+#or-word {
+  padding: 10px 0px;
+}
+
+#pick-up-label {
+  font-weight: normal;
+}
+
+#payment-heading {
+  margin-bottom: 0px;
+}
+
+#review-items-heading {
+  margin-bottom: 25px;
+}
+
+#order-summary-inner {
+  position: fixed;
+  width: 400px;
+}
+
+#order-total-label {
+  font-weight: bold;
+  font-size: larger;
+}
+
+#order-button-container {
+  text-align: center;
+}
+
+#order-button {
+  background-color: lightsalmon;
+}
+
+#shipping-first-name, #shipping-city, #shipping-state, #expiration-date, #billing-city, #billing-state, #phone-number {
+  margin-right: 15px;
+}
+
+#shipping-details-outer, #payment-details-outer, #review-items-outer, #order-summary-inner {
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 10px 40px;
+}
+
+#shipping-details-inner, #payment-details-inner, #review-items-inner, #order-summary-inner {
+  padding: 10px;
+}
