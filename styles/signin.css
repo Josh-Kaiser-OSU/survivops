@@ -1,1 +1,41 @@
+form {
+  margin: 2em 0em;
+}
 
+label {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+div label {
+  margin-bottom: 0px;
+}
+
+#outer-container {
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 10px 40px;
+  width: 300px;
+}
+
+#inner-container {
+  padding: 10px;
+}
+
+#sign-in-button{
+  margin-top: 15px;
+}
+
+#sign-in-button input{
+  width: 206px;
+  background-color: lightsalmon;
+}
+
+#sign-up-button{
+  margin-top: 15px;
+}
+
+#sign-up-button input{
+  width: 206px;
+  background-color: lightsalmon;
+}
