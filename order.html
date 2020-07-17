@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
+  <!-- Navigation bar -->
   <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom">
     <a href="index.html">
       <img src="#" alt="Logo">
@@ -20,139 +21,214 @@
     </nav>
   </div>
   <h1>Checkout</h1>
-  <div class="container">
-    <div class="row">
-      <div class="col-8">      
-        <h2>Ship to</h2>
 
-        <!-- Section to enter payment details -->
-        <div class="container" id="payment-details">
-          <div class="row">
-            <h2>Pay with</h2>
-          </div>
-          <div class="row">
-            <h3>Credit or debit card</h3>
-          </div>
-          <div class="row">
-            <div>
-              <label for="card-number">Card number</label><br>
-              <input type="text" id="card-number" name="card-number">  
+  <form action="" method="post">
+    <div class="container">
+      <div class="row">
+        <!-- Left side of the page -->
+        <div class="col-8">
+          <!-- Section to enter shipping details -->
+          <div class="container" id="shipping-details">
+            <div class="row">
+              <h2>Ship to</h2>
+            </div>
+            <div class="row">
+              <div>
+                <label for="shipping-first-name">First name</label><br>
+                <input type="text" id="shipping-first-name" name="shipping-first-name">
+              </div>
+              <div>
+                <label for="shipping-last-name">Last name</label><br>
+                <input type="text" id="shipping-last-name" name="shipping-last-name">
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="shipping-street">Street address</label><br>
+                <input type="text" id="shipping-street" name="shipping-street">
+              </div>
+            </div>
+            <div class="row">
+              <span>
+                <label for="shipping-city">City</label><br>
+                <input type="text" id="shipping-city" name="shipping-city">
+              </span>
+              <span>
+                <label for="shipping-state">State</label><br>
+                <input type="text" id="shipping-state" name="shipping-state">
+              </span>
+              <span>
+                <label for="shipping-zip">Zip code</label><br>
+                <input type="text" id="shipping-zip" name="shipping-zip">
+              </span>
+            </div>
+            <div class="row">or</div>
+            <div class="row">
+              <div>
+                <input type="checkbox" id="pick-up" name="pick-up">
+                <label for="pick-up">Pick up from store</label>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <span>
-              <label for="expiration-date">Expiration date</label><br>
-              <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY">
-            </span>
-            <span>
-              <label for="security-code">Security code</label><br>
-              <input type="text" id="security-code" name="security-code">
-            </span>
-          </div>
-          <div class="row">
-            <div>
-              <label for="name-on-card">Name on card</label><br>
-              <input type="text" id="name-on-card" name="name-on-card">
+          <!-- Section to enter payment details -->
+          <div class="container" id="payment-details">
+            <div class="row">
+              <h2>Pay with</h2>
+            </div>
+            <div class="row">
+              <h3>Credit or debit card</h3>
+            </div>
+            <div class="row">
+              <div>
+                <label for="card-number">Card number</label><br>
+                <input type="text" id="card-number" name="card-number">  
+              </div>
+            </div>
+            <div class="row">
+              <span>
+                <label for="expiration-date">Expiration date</label><br>
+                <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY">
+              </span>
+              <span>
+                <label for="security-code">Security code</label><br>
+                <input type="text" id="security-code" name="security-code">
+              </span>
+            </div>
+            <div class="row">
+              <div>
+                <label for="name-on-card">Name on card</label><br>
+                <input type="text" id="name-on-card" name="name-on-card">
+              </div>
+            </div>
+            <div class="row">
+              <h3>Billing address</h3>
+            </div>
+            <div class="row">
+              <div>
+                <label for="billing-street">Street address</label><br>
+                <input type="text" id="billing-street" name="billing-street">
+              </div>
+            </div>
+            <div class="row">
+              <span>
+                <label for="billing-city">City</label><br>
+                <input type="text" id="billing-city" name="billing-city">
+              </span>
+              <span>
+                <label for="billing-state">State</label><br>
+                <input type="text" id="billing-state" name="billing-state">
+              </span>
+              <span>
+                <label for="billing-zip">ZIP code</label><br>
+                <input type="text" id="billing-zip" name="billing-zip">
+              </span>
+            </div>
+            <div class="row">
+              <span>
+                <label for="phone-number">Phone number</label><br>
+                <input type="text" id="phone-number" name="phone-number">
+              </span>
+              <span>
+                <label for="email-address">Email address</label><br>
+                <input type="text" id="email-address" name="email-address">
+              </span>
             </div>
           </div>
-          <div class="row">
-            <h3>Billing address</h3>
-          </div>
-          <div class="row">
-            <div>
-              <label for="billing-street">Street address</label><br>
-              <input type="text" id="billing-street" name="billing-street">
+          <!-- Section to review items -->
+          <div class="container" id="review-items">
+            <div class="row">
+              <h2>Review items</h2>
             </div>
-          </div>
-          <div class="row">
-            <span>
-              <label for="billing-city">City</label><br>
-              <input type="text" id="billing-city" name="billing-city">
-            </span>
-            <span>
-              <label for="billing-state">State</label><br>
-              <input type="text" id="billing-state" name="billing-state">
-            </span>
-            <span>
-              <label for="billing-zip">ZIP code</label><br>
-              <input type="text" id="billing-zip" name="billing-zip">
-            </span>
-          </div>
-          <div class="row">
-            <span>
-              <label for="phone-number">Phone number</label><br>
-              <input type="text" id="phone-number" name="phone-number">
-            </span>
+  
+            <table class="table" id="review-items-table">
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="images/100x100-placeholder.png" alt="Image">
+                  </td>
+                  <td>
+                    <p>Product 1 Name</p>
+                    <p>Vendor</p>
+                    <p>Price</p>
+                    <p>Quantity</p>    
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="images/100x100-placeholder.png" alt="Image">
+                  </td>
+                  <td>
+                    <p>Product 2 Name</p>
+                    <p>Vendor</p>
+                    <p>Price</p>
+                    <p>Quantity</p>    
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="images/100x100-placeholder.png" alt="Image">
+                  </td>
+                  <td>
+                    <p>Product 3 Name</p>
+                    <p>Vendor</p>
+                    <p>Price</p>
+                    <p>Quantity</p>    
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="images/100x100-placeholder.png" alt="Image">
+                  </td>
+                  <td>
+                    <p>Product 4 Name</p>
+                    <p>Vendor</p>
+                    <p>Price</p>
+                    <p>Quantity</p>    
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="images/100x100-placeholder.png" alt="Image">
+                  </td>
+                  <td>
+                    <p>Product 5 Name</p>
+                    <p>Vendor</p>
+                    <p>Price</p>
+                    <p>Quantity</p>    
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <!-- Section to review items -->
-        <div class="container" id="review-items">
-          <div class="row">
-            <h2>Review items</h2>
-          </div>
-          <div class="row">
-            <div class="col-2">
-              <img src="images/100x100-placeholder.png" alt="Image">
-            </div>
-            <div class="col-10">
-              <p>Product 1 Name</p>
-              <p>Vendor</p>
-              <p>Price</p>
-              <p>Quantity</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-2">
-              <img src="images/100x100-placeholder.png" alt="Image">
-            </div>
-            <div class="col-10">
-              <p>Product 2 Name</p>
-              <p>Vendor</p>
-              <p>Price</p>
-              <p>Quantity</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-2">
-              <img src="images/100x100-placeholder.png" alt="Image">
-            </div>
-            <div class="col-10">
-              <p>Product 3 Name</p>
-              <p>Vendor</p>
-              <p>Price</p>
-              <p>Quantity</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-2">
-              <img src="images/100x100-placeholder.png" alt="Image">
-            </div>
-            <div class="col-10">
-              <p>Product 4 Name</p>
-              <p>Vendor</p>
-              <p>Price</p>
-              <p>Quantity</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-2">
-              <img src="images/100x100-placeholder.png" alt="Image">
-            </div>
-            <div class="col-10">
-              <p>Product 5 Name</p>
-              <p>Vendor</p>
-              <p>Price</p>
-              <p>Quantity</p>
-            </div>
-          </div>
+        <!-- Right side of the page -->
+        <div class="col-4">
+          <h2>Order Summary</h2>
+          <table class="table" id="order-summary-table">
+            <tbody>
+              <tr>
+                <td>Items (5):</td>
+                <td>$20.00</td>
+              </tr>
+              <tr>
+                <td>Shipping & handling</td>
+                <td>$2.00</td>
+              </tr>
+              <tr>
+                <td>Tax</td>
+                <td>$1.50</td>
+              </tr>
+              <tr>
+                <td id="order-total-label">Order total</td>
+                <td>$23.50</td>
+              </tr>
+            </tbody>
+          </table>
+          <input type="submit" value="Place your order">
         </div>
       </div>
-      <div class="col-4">
-        <h2>Payment Summary</h2>
-      </div>
-    </div>
-  </div>
+    </div>  
+  </form>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
