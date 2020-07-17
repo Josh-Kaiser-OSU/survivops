@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign-In Page</title>
+  <link rel="stylesheet" href="styles/signin.css">
   <!-- BootstrapCDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
@@ -22,36 +23,62 @@
   </div>
   <!-- Form for customer sign-in -->
   <form action="" method="get" class="sign-in-form">
-    <h1>Sign-In</h1>
-    <div id="sign-in-email">
-      <label for="sign-in-email-field">Email address</label>
-      <input type="email" id="sign-in-email-field" name="sign-in-email-field"><br>
-    </div>
-    <div id="sign-in-password">
-      <label for="sign-in-password-field">Password</label>
-      <input type="password" id="sign-in-password-field" name="sign-in-password-field">
-    </div>
-    <div id="sign-in-button">
-      <input type="submit" value="Continue">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <h1>Sign-In</h1>
+          </div>
+          <div class="row" id="sign-in-email">
+            <div>
+              <label for="sign-in-email-field">Email address</label><br>
+              <input type="email" id="sign-in-email-field" name="sign-in-email-field">  
+            </div>
+          </div>
+          <div class="row" id="sign-in-password">
+            <div>
+              <label for="sign-in-password-field">Password</label><br>
+              <input type="password" id="sign-in-password-field" name="sign-in-password-field">  
+            </div>
+          </div>
+          <div class="row" id="sign-in-button">
+            <input type="submit" value="Continue">
+          </div>
+        </div>
+      </div>
     </div>
   </form>
   <!-- Form for customer sign-up -->
   <form action="" method="get" class="sign-up-form">
-    <h1>Sign-Up</h1>
-    <div id="sign-up-email">
-      <label for="sign-up-email-field">Email address</label>
-      <input type="email" id="sign-up-email-field" name="sign-up-email-field"><br>
-    </div>
-    <div id="sign-up-password">
-      <label for="sign-up-password-field">Password</label>
-      <input type="password" id="sign-up-password-field" name="sign-up-password-field">
-    </div>
-    <div id="sign-up-confirm-password">
-      <label for="sign-up-confirm-password-field">Confirm password</label>
-      <input type="password" id="sign-up-confirm-password-field" name="sign-up-confirm-password-field">
-    </div>
-    <div id="sign-up-button">
-      <input type="submit" value="Create Account">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <h1>Sign-Up</h1>
+          </div>
+          <div class="row" id="sign-up-email">
+            <div>
+              <label for="sign-up-email-field">Email address</label><br>
+              <input type="email" id="sign-up-email-field" name="sign-up-email-field">
+            </div>
+          </div>
+          <div class="row" id="sign-up-password">
+            <div>
+              <label for="sign-up-password-field">Password</label><br>
+              <input type="password" id="sign-up-password-field" name="sign-up-password-field">  
+            </div>
+          </div>
+          <div class="row" id="sign-up-confirm-password">
+            <div>
+              <label for="sign-up-confirm-password-field">Confirm password</label><br>
+              <input type="password" id="sign-up-confirm-password-field" name="sign-up-confirm-password-field">  
+            </div>
+          </div>
+          <div class="row" id="sign-up-button">
+            <input type="submit" value="Create Account">
+          </div>      
+        </div>
+      </div>
     </div>
   </form>
   <!-- Bootstrap JS -->
