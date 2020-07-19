@@ -1,1 +1,25 @@
+button {
+  padding: 0px 30px;
+  text-align: left;
+  background-color: lightsalmon;
+}
 
+.container {
+  margin-top: 50px;
+}
+
+#product-table {
+  width: 40%;
+}
+
+#product-image-container {
+  padding: 0px;
+}
+
+#quantity-to-order {
+  width: 60px;
+}
+
+#product-description {
+  margin-top: 40px;
+}
