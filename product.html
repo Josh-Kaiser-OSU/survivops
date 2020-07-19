@@ -24,7 +24,7 @@
   <div class="container">
     <!-- Product image, title, and other info -->
     <div class="row">
-      <div class="col-3">
+      <div class="col-3" id="product-image-container">
         <img src="images/220x300-placeholder.png" alt="Product Image">
       </div>
       <div class="col-9">
@@ -32,7 +32,7 @@
           <h1>Product 1</h1>
         </div>
         <div class="row">
-          <table class="table">
+          <table class="table" id="product-table">
             <tbody>
               <tr>
                 <td>Available:</td>
@@ -43,8 +43,8 @@
                 <td>$5.00</td>
               </tr>
               <tr>
-                <td>Quantity</td>
-                <td>1</td>
+                <td><label for="quantity-to-order">Quantity</label></td>
+                <td><input type="number" value="1" id="quantity-to-order" name="quantity-to-order" min="1" max="100"></td>
               </tr>
               <tr>
                 <td>Sold by:</td>
@@ -60,7 +60,7 @@
     </div>
     <!-- Product description -->
     <div class="row">
-      <p>
+      <p id="product-description">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident enim fugit ipsam rem aut
          nemo facilis amet iste voluptate rerum ipsum ipsa exercitationem, quam cum ad error vitae.
          Expedita, veritatis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo,
