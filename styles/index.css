@@ -1,5 +1,6 @@
-#categories {
-    border-right: 1px solid black;
+#products {
+    max-width: none;
+    
 }
 
 #product-grid li {

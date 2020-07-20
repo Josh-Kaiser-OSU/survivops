@@ -1,1 +1,10 @@
+body {
+    width: 80%;
+    margin-left: 10%;
+}
 
+#helpDeskImage {
+    width: 40%;
+    float: right;
+    margin-right: 10%;
+}

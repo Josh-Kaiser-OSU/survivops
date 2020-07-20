@@ -1,1 +1,34 @@
+#products {
+    max-width: none;    
+}
 
+#product-grid li {
+    width: 250px;
+    display: block;
+    border: 1px solid black;
+    list-style: none;
+    margin: 5px 10%;
+    padding: 10px;
+}
+
+#product-grid li img {
+    width: 100%;
+    height: 200px;
+}
+
+#cart-name {
+    margin-left: 20%;
+}
+
+
+.qty-label {
+    margin-left: 40px;
+}
+
+.qty-input {
+    width: 50px;
+}
+
+.remove-btn {
+    margin-left: 40px;
+}
