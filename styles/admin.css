@@ -1,1 +1,39 @@
-/* Add style rules */
+h1 {
+  text-align: center;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 1em;
+}
+
+input {
+  width: 100%;
+}
+
+.card {
+  width: 60%;
+  margin: 3em auto;
+}
+
+.card-subtitle {
+  font-size: 1.2em;
+  padding-bottom: 2em;
+}
+
+.update-btn {
+  margin-bottom: 1em;
+}
+
+#customer-search-btn, #new-product-btn {
+  background-color: lightsalmon;
+  color: black;
+}
+
+#new-product-btn {
+  margin-bottom: 1.5em;
+}
+
+#new-product-cell {
+  border: none;
+}
