@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administration Page</title>
+  <title>Administrator Page</title>
   <link rel="stylesheet" href="styles/admin.css">
   <!-- BootstrapCDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -32,7 +32,120 @@
     <li><a href="signin.html">Sign In Page</a>- allows the Customer to sign in and sign up (Customer table).</li>
   </ul>
   <!-- -->
-  <h1>Administration Page</h1>
+  <h1>Administrator Dashboard</h1>
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">List customer orders</h2>
+      <h3 class="card-subtitle text-muted">Enter a customer's ID below to show all orders belonging to the customer.</h3>
+      <form>
+        <div class="form-group">
+          <label for="customer-id">Customer ID</label><br>
+          <input type="text" id="customer-id" name="customer-id">
+        </div>
+        <button type="submit" class="btn btn-primary" id="customer-search-btn">Search</button>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Product Inventory Management</h2>
+      <h3 class="card-subtitle text-muted">Add, update, or delete products from the inventory.</h3>
+      <form id="add-new-product-form">
+        <div class="form-group">
+          <table>
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Vendor</th>
+                <th>Price</th>
+                <th>Qty Available</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input type="text" id="new-product-name" name="new-product-name" required">
+                </td>
+                <td>
+                  <input type="text" id="new-category" name="new-category" required">
+                </td>
+                <td>
+                  <input type="text" id="new-vendor" name="new-vendor" required>
+                </td>
+                <td>
+                  <input type="text" id="new-price" name="new-price" required>
+                </td>
+                <td>
+                  <input type="text" id="new-qty-available" name="new-qty-available" required>
+                </td>
+                <td>
+                  <input type="file" id="new-image" name="new-image" accept="image/png, image/jpeg, .webp, .tiff, .tif" required>
+                </td>
+              </tr>
+              <tr>
+                <td id="new-product-cell">
+                  <button type="button" class="btn btn-primary" id="new-product-btn">Add product</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Vendor</th>
+            <th>Price</th>
+            <th>Qty Available</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Swift-1000 Kayak</td>
+            <td>Activity-Gear</td>
+            <td>Best Kayaks Co.</td>
+            <td>$300.00</td>
+            <td>6</td>
+            <td><img src="images/100x100-placeholder.png"></td>
+            <td>
+              <button type="button" class="update-btn">Update</button>
+              <button type="button" class="delete-btn">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Snuggle-4000 Sleeping Bag</td>
+            <td>Sleeping</td>
+            <td>Best Sleeping Bags Co.</td>
+            <td>$40.00</td>
+            <td>18</td>
+            <td><img src="images/100x100-placeholder.png"></td>
+            <td>
+              <button type="button" class="update-btn">Update</button>
+              <button type="button" class="delete-btn">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Scrumptious-2000 Spork</td>
+            <td>Eating</td>
+            <td>Best Sporks Co.</td>
+            <td>$7.00</td>
+            <td>43</td>
+            <td><img src="images/100x100-placeholder.png"></td>
+            <td>
+              <button type="button" class="update-btn">Update</button>
+              <button type="button" class="delete-btn">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>    
+    </div>
+  </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
