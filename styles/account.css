@@ -1,1 +1,21 @@
+.content {
+    width: 80%;
+    margin-left: 10%;
+}
 
+h2 {
+    text-align: center;
+}
+  
+th, td {
+    border: 1px solid black;
+    padding: 1em;
+}
+  
+input {
+    width: 100%;
+}
+
+#delete-account-button {
+    margin-bottom: 100px;
+}
