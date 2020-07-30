@@ -1,8 +1,7 @@
-
 -- Name: Joshua Kaiser, Timothy Yoon
 -- Group: 57
 -- Assignment: Project Step 4 Draft Version
--- File: crud.sql
+-- File: data-manipulation-queries.sql
 -- Description: This file contains SELECT, INSERT, UPDATE and
 --   DELETE queries to let users interact with data.
 
