@@ -1,7 +1,7 @@
 -- Name: Joshua Kaiser, Timothy Yoon
 -- Group: 57
 -- Assignment: Project Step 4 Draft Version
--- File: initialization.sql
+-- File: data-definition-queries.sql
 -- Description: This file contains data definition queries to
 -- generate the database and insert queries to populate the
 -- database with sample data.
