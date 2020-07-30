@@ -6,12 +6,11 @@
 -- generate the database and insert queries to populate the
 -- database with sample data.
 
+-- =============================================
+-- Create table structures
+-- =============================================
 
--- Customers (Tim)
-
---
--- Table structure for table `customers`
---
+-- customers (Tim)
 
 DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
@@ -24,20 +23,7 @@ CREATE TABLE `customers` (
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `customers`
---
-
-LOCK TABLES `customers` WRITE;
-INSERT INTO `customers` (fname, lname, email, password, phone_number)
-VALUES ('Gene', 'Fox', 'GeneLFox@dayrep.com', 'teeSe7lai', '336-650-5365'),
-       ('Michael', 'Bormann', 'MichaelPBormann@armyspy.com', 'hee7Qui0t', '567-240-5343'),
-       ('Devin', 'Drake', 'DevinMDrake@dayrep.com', 'HoetaaZia8ei', '254-616-0250'),
-       ('Stephany', 'Lang', 'StephanyRLang@jourrapide.com', 'eimo2ohSh', '706-278-8529');
-UNLOCK TABLES;
-
-
--- Carts (Josh)
+-- carts (Josh)
 
 DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts` (
@@ -47,23 +33,7 @@ CREATE TABLE `carts` (
    FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `carts`
---
-
-LOCK TABLES `carts` WRITE;
-INSERT INTO `carts` (customer_id, cart_name) VALUES 
-(2, `Kayak trip`),
-(2, `Ski trip`),
-(1, `Surf trip`),
-(4, `For John’s BDay`);
-UNLOCK TABLES;
-
--- Orders (Tim)
-
---
--- Table structure for table `orders`
---
+-- orders (Tim)
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
@@ -86,6 +56,72 @@ CREATE TABLE `orders` (
   FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- products (Josh)
+
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products` (
+   `product_id` INT(255) AUTO_INCREMENT not NULL PRIMARY KEY,
+   `product_name` VARCHAR(1000) not NULL,
+   `category` VARCHAR(1000) not NULL,
+   `vendor` VARCHAR(1000) not NULL,
+   `price` DECIMAL(18,2) not NULL,
+   `image` BLOB,  -- Will be not NULL later
+   `quantity_available` INT(255) not NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- products_carts (Josh)
+
+DROP TABLE IF EXISTS `products_carts`;
+CREATE TABLE `products_in_carts` (
+   `cart_id` INT(255) not NULL,
+   `product_id` INT(255) not NULL,
+   `product_quantity` INT(255) not NULL,
+   PRIMARY KEY (`cart_id`, `product_id`),
+   FOREIGN KEY (`cart_id`) REFERENCES `carts` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- products_orders (Tim)
+
+DROP TABLE IF EXISTS `products_orders`;
+CREATE TABLE `products_orders` (
+   `order_id` INT(255) NOT NULL,
+   `product_id` INT(255) NOT NULL,
+   `product_quantity` INT(255) NOT NULL,
+   PRIMARY KEY (`order_id`, `product_id`),
+   FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+   FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- =============================================
+-- Insert sample data into tables
+-- =============================================
+
+--
+-- Dumping data for table `customers`
+--
+
+LOCK TABLES `customers` WRITE;
+INSERT INTO `customers` (fname, lname, email, password, phone_number)
+VALUES ('Gene', 'Fox', 'GeneLFox@dayrep.com', 'teeSe7lai', '336-650-5365'),
+       ('Michael', 'Bormann', 'MichaelPBormann@armyspy.com', 'hee7Qui0t', '567-240-5343'),
+       ('Devin', 'Drake', 'DevinMDrake@dayrep.com', 'HoetaaZia8ei', '254-616-0250'),
+       ('Stephany', 'Lang', 'StephanyRLang@jourrapide.com', 'eimo2ohSh', '706-278-8529');
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `carts`
+--
+
+LOCK TABLES `carts` WRITE;
+INSERT INTO `carts` (customer_id, cart_name) VALUES 
+(2, `Kayak trip`),
+(2, `Ski trip`),
+(1, `Surf trip`),
+(4, `For John’s BDay`);
+UNLOCK TABLES;
+
 --
 -- Dumping data for table `orders`
 --
@@ -97,19 +133,6 @@ VALUES (1, '321 West Virginia Avenue', 'Albany', 'NY', '12210', '4045 Jacobs Str
        (3, '1331 Havanna Street', 'Winston Salem', 'NC', '27101', '1809 Thomas Street', 'Libertyville', 'IL', '60048', FALSE, FALSE, TRUE, TRUE, '2020-05-28 08:13:38'),
        (4, '3049 Seth Street', 'Abilene', 'TX', '79602', '2379 Woodland Drive', 'Omaha', 'NE', '68102', TRUE, TRUE, TRUE, TRUE, '2020-03-30 23:41:18');
 UNLOCK TABLES;
-
-
--- products (Josh)
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
-   `product_id` INT(255) AUTO_INCREMENT not NULL PRIMARY KEY,
-   `product_name` VARCHAR(1000) not NULL,
-   `category` VARCHAR(1000) not NULL,
-   `vendor` VARCHAR(1000) not NULL,
-   `price` DECIMAL(18,2) not NULL,
-   `image` BLOB,  -- Will be not NULL later
-   `quantity_available` INT(255) not NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Data for products
@@ -123,17 +146,9 @@ INSERT INTO `products` (product_name, category, vendor, price, quantity_availabl
 (`snow suit`, `apparel`, `north face`, 20);
 UNLOCK TABLES;
 
--- products_carts (Josh)
-DROP TABLE IF EXISTS `products_carts`;
-CREATE TABLE `products_in_carts` (
-   `cart_id` INT(255) not NULL,
-   `product_id` INT(255) not NULL,
-   `product_quantity` INT(255) not NULL,
-   PRIMARY KEY (`cart_id`, `product_id`),
-   FOREIGN KEY (`cart_id`) REFERENCES `carts` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-   FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+--
+-- Dumping data for table `products_carts`
+--
 
 LOCK TABLES `products_carts` WRITE;
 INSERT INTO `products_carts` (cart_id, product_id, product_quantity) VALUES 
@@ -142,23 +157,6 @@ INSERT INTO `products_carts` (cart_id, product_id, product_quantity) VALUES
 (1, 3, 2),
 (3, 2, 1),
 UNLOCK TABLES;
-
-
--- products_orders (Tim)
-
---
--- Table structure for table `products_orders`
---
-
-DROP TABLE IF EXISTS `products_orders`;
-CREATE TABLE `products_orders` (
-   `order_id` INT(255) NOT NULL,
-   `product_id` INT(255) NOT NULL,
-   `product_quantity` INT(255) NOT NULL,
-   PRIMARY KEY (`order_id`, `product_id`),
-   FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-   FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products_orders`
