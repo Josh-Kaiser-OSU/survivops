@@ -142,10 +142,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `products` WRITE;
 INSERT INTO `products` (product_name, category, vendor, price, quantity_available) VALUES 
-('2-Person Tent', 'tents', 'patagonia', 100),
-('Kayak', 'boats', 'wilderness systems', 2),
-('backpack', 'backpacks', 'gregory', 8),
-('snow suit', 'apparel', 'north face', 20);
+('2-Person Tent', 'tents', 'patagonia', 578.99, 100),
+('Kayak', 'boats', 'wilderness systems', 2000.00 ,2),
+('backpack', 'backpacks', 'gregory', 200.00, 8),
+('snow suit', 'apparel', 'north face', 400.00, 20);
 UNLOCK TABLES;
 
 --
