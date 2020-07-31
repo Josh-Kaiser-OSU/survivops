@@ -74,7 +74,7 @@ CREATE TABLE `products` (
 -- products_carts (Josh)
 
 DROP TABLE IF EXISTS `products_carts`;
-CREATE TABLE `products_in_carts` (
+CREATE TABLE `products_carts` (
    `cart_id` INT(255) not NULL,
    `product_id` INT(255) not NULL,
    `product_quantity` INT(255) not NULL,
