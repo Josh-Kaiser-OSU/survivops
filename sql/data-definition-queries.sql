@@ -52,7 +52,7 @@ CREATE TABLE `orders` (
   `shipped` BOOLEAN,
   `pickup_or_ship` BOOLEAN,
   `has_paid` BOOLEAN NOT NULL DEFAULT FALSE,
-  `completed` BOOLEAN NOT NULL DEFAULT FALSE,
+  `delivered` BOOLEAN NOT NULL DEFAULT FALSE,
   `order_date` DATETIME,
   PRIMARY KEY (`order_id`),
   FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
@@ -129,7 +129,7 @@ UNLOCK TABLES;
 --
 
 LOCK TABLES `orders` WRITE;
-INSERT INTO `orders` (customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, completed, order_date)
+INSERT INTO `orders` (customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date)
 VALUES (1, '321 West Virginia Avenue', 'Albany', 'NY', '12210', '4045 Jacobs Street', 'Pittsburgh', 'PA', '15226', TRUE, TRUE, TRUE, TRUE, '2020-02-16 07:08:03'),
        (2, '4238 Strother Street', 'Birmingham', 'AL', '35203', '3317 Willow Greene Drive', 'Enterprise', 'AL', '36330', FALSE, TRUE, FALSE, FALSE, '2020-04-30 12:00:41'),
        (3, '1331 Havanna Street', 'Winston Salem', 'NC', '27101', '1809 Thomas Street', 'Libertyville', 'IL', '60048', FALSE, FALSE, TRUE, TRUE, '2020-05-28 08:13:38'),
