@@ -36,6 +36,10 @@ FROM customers
 WHERE :emailInput IN
 
 --    READ cart (Requires a join)
+SELECT carts.cart_name AS cart_name, products.product_name AS product_name, products.price AS price, cart_item.product_quantity AS quantity 
+FROM (SELECT cart_id, customer_id, cart_name FROM carts WHERE customer_id = :customer_id) AS carts 
+INNER JOIN products_carts AS cart_item ON carts.cart_id = cart_item.cart_id 
+INNER JOIN products ON products.product_id = cart_item.product_id;
 
 -- UPDATE
 UPDATE customers SET email=’new-email’, password=’new-password’ WHERE user_id = :id;
