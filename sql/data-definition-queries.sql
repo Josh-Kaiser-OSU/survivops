@@ -157,7 +157,7 @@ INSERT INTO `products_carts` (cart_id, product_id, product_quantity) VALUES
 (1, 2, 9),
 (2, 2, 18),
 (1, 3, 2),
-(3, 2, 1),
+(3, 2, 1);
 UNLOCK TABLES;
 
 --
