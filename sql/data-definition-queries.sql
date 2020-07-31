@@ -1,4 +1,6 @@
--- Name: Joshua Kaiser, Timothy Yoon
+
+ 
+ -- Name: Joshua Kaiser, Timothy Yoon
 -- Group: 57
 -- Assignment: Project Step 4 Draft Version
 -- File: data-definition-queries.sql
@@ -116,10 +118,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `carts` WRITE;
 INSERT INTO `carts` (customer_id, cart_name) VALUES 
-(2, `Kayak trip`),
-(2, `Ski trip`),
-(1, `Surf trip`),
-(4, `For John’s BDay`);
+(2, 'Kayak trip'),
+(2, 'Ski trip'),
+(1, 'Surf trip'),
+(4, 'For John’s BDay');
 UNLOCK TABLES;
 
 --
@@ -140,10 +142,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `products` WRITE;
 INSERT INTO `products` (product_name, category, vendor, price, quantity_available) VALUES 
-(`2-Person Tent`, `tents`, `patagonia`, 100),
-(`Kayak`, `boats`, `wilderness systems`, 2),
-(`backpack`, `backpacks`, `gregory`, 8),
-(`snow suit`, `apparel`, `north face`, 20);
+('2-Person Tent', 'tents', 'patagonia', 100),
+('Kayak', 'boats', 'wilderness systems', 2),
+('backpack', 'backpacks', 'gregory', 8),
+('snow suit', 'apparel', 'north face', 20);
 UNLOCK TABLES;
 
 --
