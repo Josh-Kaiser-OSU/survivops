@@ -14,9 +14,19 @@
 INSERT INTO `customers` (fname, lname, email, password, phone_number)
 VALUES (:fnameInput, :lnameInput, :emailInput, :passwordInput, :phone_numberInput);
 
-INSERT INTO carts (customer_id, cart_name) VALUES (:customer_id, :cart_name);
+INSERT INTO `carts` (customer_id, cart_name) VALUES (:customer_id, :cart_name);
 
-SELECT fname, lname, email, password, phone_number FROM customers WHERE customer_id = :customer_id;
+INSERT INTO `orders` (customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date)
+VALUES (:customer_id, :billing_street, :billing_city, :billing_state, :billing_zip, :shipping_street, :shipping_city, :shipping_state, :shipping_zip, :shipped, :pickup_or_ship, :has_paid, :delivered, :order_date);
+
+INSERT INTO `products` (product_name, category, vendor, price, image, quantity_available)
+VALUES (:product_name, :category, :vendor, :price, :image, :quantity_available);
+
+INSERT INTO `products_carts` (cart_id, product_id, product_quantity)
+VALUES (:cart_id, :product_id, :product_quantity);
+
+INSERT INTO `products_orders` (order_id, product_id, product_quantity)
+VALUES (:order_id, :product_id, :product_quantity);
 
 -- READ
 SELECT product_name, price, image FROM products WHERE category = :category;
