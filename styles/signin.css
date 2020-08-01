@@ -2,20 +2,35 @@ form {
   margin: 2em 0em;
 }
 
+h1 {
+  padding-bottom: 0.2em;
+}
+
 label {
+  font-size: 1.2em;
   font-weight: 600;
   margin-top: 10px;
+  text-align: left;
 }
 
 div label {
   margin-bottom: 0px;
 }
 
+.col-6 {
+  margin-left: 4.5em;
+  text-align: left;
+}
+
+.input {
+  width: 20em;
+}
+
 #outer-container {
   border: 1px solid silver;
   border-radius: 5px;
-  padding: 10px 40px;
-  width: 300px;
+  padding: 20px 40px;
+  width: 35em;
 }
 
 #inner-container {
@@ -27,8 +42,14 @@ div label {
 }
 
 #sign-in-button input{
-  width: 206px;
+  width: 10em;
+  height: 2em;
+  margin-top: 1em;
   background-color: lightsalmon;
+}
+
+#sign-up-phone-number-format {
+  font-size: 0.8em;
 }
 
 #sign-up-button{
@@ -36,6 +57,8 @@ div label {
 }
 
 #sign-up-button input{
-  width: 206px;
+  width: 10em;
+  height: 2em;
+  margin-top: 1em;
   background-color: lightsalmon;
 }
