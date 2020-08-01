@@ -38,58 +38,85 @@
       <div class="row" id="inner-container">
         <div class="col-12">
           <div class="row">
-            <h1>Sign-In</h1>
+            <div class="col-6">
+              <h1>Sign-In</h1>
+            </div>
           </div>
           <div class="row" id="sign-in-email">
-            <div>
+            <div class="col-6">
               <label for="sign-in-email-field">Email address</label><br>
-              <input type="email" id="sign-in-email-field" name="sign-in-email-field">  
+              <input type="email" id="sign-in-email-field" class="input" name="sign-in-email-field">  
             </div>
           </div>
           <div class="row" id="sign-in-password">
-            <div>
+            <div class="col-6">
               <label for="sign-in-password-field">Password</label><br>
-              <input type="password" id="sign-in-password-field" name="sign-in-password-field">  
+              <input type="password" id="sign-in-password-field" class="input" name="sign-in-password-field">  
             </div>
           </div>
           <div class="row" id="sign-in-button">
-            <input type="submit" value="Continue">
+            <div class="col-6">
+              <input type="submit" value="Continue">
+            </div>
           </div>
         </div>
       </div>
     </div>
   </form>
-
   <hr>
-
   <!-- Form for customer sign-up -->
   <form action="" method="get" class="sign-up-form">
     <div class="container" id="outer-container">
       <div class="row" id="inner-container">
         <div class="col-12">
           <div class="row">
-            <h1>Sign-Up</h1>
+            <div class="col-6">
+              <h1>Sign-Up</h1>
+            </div>
+          </div>
+          <div class="row" id="sign-up-fname">
+            <div class="col-6">
+              <label for="sign-up-fname-field">First name</label><br>
+              <input type="text" id="sign-up-fname-field" class="input" name="sign-up-fname-field">
+            </div>
+          </div>
+          <div class="row" id="sign-up-lname">
+            <div class="col-6">
+              <label for="sign-up-lname-field">Last name</label><br>
+              <input type="text" id="sign-up-lname-field" class="input" name="sign-up-lname-field">
+            </div>
           </div>
           <div class="row" id="sign-up-email">
-            <div>
+            <div class="col-6">
               <label for="sign-up-email-field">Email address</label><br>
-              <input type="email" id="sign-up-email-field" name="sign-up-email-field">
+              <input type="email" id="sign-up-email-field" class="input" name="sign-up-email-field">
             </div>
           </div>
           <div class="row" id="sign-up-password">
-            <div>
+            <div class="col-6">
               <label for="sign-up-password-field">Password</label><br>
-              <input type="password" id="sign-up-password-field" name="sign-up-password-field">  
+              <input type="password" id="sign-up-password-field" class="input" name="sign-up-password-field">  
             </div>
           </div>
           <div class="row" id="sign-up-confirm-password">
-            <div>
+            <div class="col-6">
               <label for="sign-up-confirm-password-field">Confirm password</label><br>
-              <input type="password" id="sign-up-confirm-password-field" name="sign-up-confirm-password-field">  
+              <input type="password" id="sign-up-confirm-password-field" class="input" name="sign-up-confirm-password-field">  
+            </div>
+          </div>
+          <div class="row" id="sign-up-phone-number">
+            <div class="col-6">
+              <label for="sign-up-phone-number-field">
+                <div>Phone number</div>
+                <div id="sign-up-phone-number-format">(Format: 000-000-0000)</div>
+              </label><br>
+              <input type="tel" id="sign-up-phone-number-field" class="input" name="sign-up-phone-number-field" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
             </div>
           </div>
           <div class="row" id="sign-up-button">
-            <input type="submit" value="Create account">
+            <div class="col-6">
+              <input type="submit" value="Create account">
+            </div>
           </div>      
         </div>
       </div>
