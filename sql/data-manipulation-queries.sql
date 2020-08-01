@@ -42,9 +42,33 @@ INNER JOIN products_carts AS cart_item ON carts.cart_id = cart_item.cart_id
 INNER JOIN products ON products.product_id = cart_item.product_id;
 
 -- UPDATE
-UPDATE customers SET email=’new-email’, password=’new-password’ WHERE user_id = :id;
+UPDATE `customers` 
+SET fname=:fname, lname=:lname, email=:email, password=:password, phone_number=:phone_number
+WHERE id=:id;
 
+UPDATE `carts`
+SET customer_id=:customer_id, cart_name=:cart_name
+WHERE cart_id=:cart_id;
+
+UPDATE `orders`
+SET customer_id=:customer_id, billing_street=:billing_street, billing_city=:billing_city, billing_state=:billing_state, 
+billing_zip=:billing_zip, shipping_street=:shipping_street, shipping_city=:shipping_city, shipping_state=:shipping_state, 
+shipping_zip=:shipping_zip, shipped=:shipped, pickup_or_ship=:pickup_or_ship, has_paid=:has_paid, delivered=:delivered, order_date=:order_date
+WHERE order_id=:order_id;
+
+UPDATE `products`
+SET product_name=:product_name, category=:category, vendor=:vendor, price=:price, image=:image, quantity_available=:quantity_available
+WHERE product_id=:product_id;
+
+UPDATE `products_carts`
+SET product_quantity=:product_quantity
+WHERE cart_id=:cart_id AND product_id=:product_id;
+
+UPDATE `products_orders`
+SET product_quantity=:product_quantity
+WHERE order_id=:order_id AND product_id=:product_id;
 
 -- DELETE
-DELETE FROM customers WHERE user_id = :id;
+DELETE FROM `customers` WHERE user_id=:id;
 
+DELETE FROM `carts` WHERE cart_id=:cart_id
