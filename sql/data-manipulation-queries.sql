@@ -44,7 +44,7 @@ INNER JOIN products ON products.product_id = cart_item.product_id;
 -- UPDATE
 UPDATE `customers` 
 SET fname=:fname, lname=:lname, email=:email, password=:password, phone_number=:phone_number
-WHERE id=:id;
+WHERE customer_id=:customer_id;
 
 UPDATE `carts`
 SET customer_id=:customer_id, cart_name=:cart_name
@@ -69,6 +69,20 @@ SET product_quantity=:product_quantity
 WHERE order_id=:order_id AND product_id=:product_id;
 
 -- DELETE
-DELETE FROM `customers` WHERE user_id=:id;
+DELETE FROM `customers`
+WHERE customer_id=:id;
 
-DELETE FROM `carts` WHERE cart_id=:cart_id
+DELETE FROM `carts`
+WHERE cart_id=:cart_id;
+
+DELETE FROM `orders`
+WHERE order_id = :order_id;
+
+DELETE FROM `products`
+WHERE product_id = :product_id;
+
+DELETE FROM `products_carts`
+WHERE cart_id = :cart_id AND product_id = :product_id;
+
+DELETE FROM `products_orders`
+WHERE order_id = :order_id AND product_id = :product_id;
