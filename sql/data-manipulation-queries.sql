@@ -29,17 +29,19 @@ INSERT INTO `products_orders` (order_id, product_id, product_quantity)
 VALUES (:order_id, :product_id, :product_quantity);
 
 -- READ
-SELECT product_name, price, image FROM products WHERE category = :category;
+`customers`
 
-SELECT customer_id
-FROM customers
-WHERE :emailInput IN
-
---    READ cart (Requires a join)
+    --    READ cart (Requires a join)
 SELECT carts.cart_name AS cart_name, products.product_name AS product_name, products.price AS price, cart_item.product_quantity AS quantity 
 FROM (SELECT cart_id, customer_id, cart_name FROM carts WHERE customer_id = :customer_id) AS carts 
 INNER JOIN products_carts AS cart_item ON carts.cart_id = cart_item.cart_id 
 INNER JOIN products ON products.product_id = cart_item.product_id;
+
+SELECT customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date
+FROM `orders`
+WHERE order_id=:order_id
+
+SELECT product_name, category, vendor, price, image, quantity_available FROM products WHERE category = :category;
 
 -- UPDATE
 UPDATE `customers` 
