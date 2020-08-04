@@ -8,7 +8,7 @@ webapp = Flask(__name__)
 @webapp.route('/hello')
 #provide a view (fancy name for a function) which responds to any requests on this route
 def hello():
-    return "Hello World!";
+    return "Hello World!"
 
 @webapp.route('/')
 def index():
@@ -18,8 +18,8 @@ def index():
     create_table = "CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);"
     insert_row = "INSERT INTO diagnostic (text) VALUES ('MySQL is Working!')"
     query = "SELECT * FROM diagnostic;"
-    execute_query(db_connection, drop_table);
-    execute_query(db_connection, create_table);
-    execute_query(db_connection, insert_row);
-    values = execute_query.fetchall(db_connection, query);
+    execute_query(db_connection, drop_table)
+    execute_query(db_connection, create_table)
+    execute_query(db_connection, insert_row)
+    values = execute_query.fetchall(db_connection, query)
     return render_template('home.html', results=values)
