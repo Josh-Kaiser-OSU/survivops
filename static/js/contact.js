@@ -1,1 +1,1 @@
-
+console.log("contact.js works");

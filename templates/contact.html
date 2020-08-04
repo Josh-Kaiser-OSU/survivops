@@ -1,62 +1,33 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Survival Store</title>
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <!-- My CSS -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/contact.css') }}">
-    </head>
-    <body>
-        <!-- Navigation bar -->
-        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom">
-            <a href="index.html">
-                <img src="#" alt="Logo">
-            </a>
-            <h1 class="my-0 mr-md-auto font-weight-normal">Company Name</h1>
-            <nav class="my-2 my-md-0 mr-md-3">
-                <a class="p-2 text-dark" href="signin.html">Sign In</a>
-                <a class="p-2 text-dark" href="cart.html">View Cart</a>
-                <a class="p-2 text-dark" href="contact.html">Contact</a>
-                <a class="p-2 text-dark" href="account.html">My Account</a>
-                <a class="p-2 text-dark" href="admin.html">Admin Page</a>
-            </nav>
-        </div>
-        <!-- Remove later -->
-        <ul>
-            <li><a href="cart.html">Cart Page</a>- allows the Customer to access the carts associated with them. (Carts table)</li>
-            <li><a href="order.html">Order Page</a>- allows the Customer to place an order using the Customer's billing address, products in the orders (Customer table, Orders table)</li>
-            <li><a href="product.html">Single Product Page</a>- allows the Customer to access the information in a Product instance (Product table).</li>
-            <li><a href="index.html">Product List Page</a>- allows the Customer to access the each product in the Products table.</li>
-            <li><a href="signin.html">Sign In Page</a>- allows the Customer to sign in and sign up (Customer table).</li>
-        </ul>
-        <!-- -->
-        <div id="content">
-            <h2>Help</h2>
-            <img id="helpDeskImage" src="images/helpDeskEmployee.jpg" alt="Help desk employee">
-            <p>
-                Our helpful staff is here to help with any questions or 
-            </p>
+{% extends "layouts/main.html" %}
 
-            <h2>FAQs</h2>
-            <h3>How do I make a return?</h3>
-            <p>Please locate your order number and payment information on hand, then contact our helpful help desk staff at the number or email above.</p>
+{% block css_file %}
+{{ url_for('static', filename='styles/contact.css') }}
+{% endblock %}
 
-            <h3>When will my package arrive?</h3>
-            <p>Never, because you haven't been charged. This website doesn't actually sell anything... yet.</p>
+{% block content %}
+<div id="content">
+    <h2>Help</h2>
+    <img id="helpDeskImage" src="images/helpDeskEmployee.jpg" alt="Help desk employee">
+    <p>
+        Our helpful staff is here to help with any questions or 
+    </p>
 
-            <h3>Who made this awesome website?</h3>
-            <p>Tiothy Yoon and Josh Kaiser made this website for their CS 340 project.</p>
-        </div>
-        <hr>
-        <footer>
-            <span>Photo by <a href="https://unsplash.com/@evphotocinema?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Evan Dvorkin</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
-        </footer>
-        <!-- Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        <!-- My JS -->
-        <script src="js/index.js"></script>
-    </body>
-</html>
+    <h2>FAQs</h2>
+    <h3>How do I make a return?</h3>
+    <p>Please locate your order number and payment information on hand, then contact our helpful help desk staff at the number or email above.</p>
+
+    <h3>When will my package arrive?</h3>
+    <p>Never, because you haven't been charged. This website doesn't actually sell anything... yet.</p>
+
+    <h3>Who made this awesome website?</h3>
+    <p>Tiothy Yoon and Josh Kaiser made this website for their CS 340 project.</p>
+</div>
+<hr>
+<footer>
+    <span>Photo by <a href="https://unsplash.com/@evphotocinema?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Evan Dvorkin</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+</footer>
+{% endblock %}
+
+{% block js_file %}
+{{ url_for('static', filename='js/contact.js') }}
+{% endblock %}

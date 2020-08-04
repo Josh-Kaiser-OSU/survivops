@@ -1,1 +1,1 @@
-
+console.log("product.js works");
