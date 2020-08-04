@@ -5,7 +5,7 @@
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <!-- My CSS -->
-        <link rel="stylesheet" href="styles/index.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
     </head>
     <body>
         <!-- Navigation bar -->
@@ -24,11 +24,11 @@
         </div>
         <!-- Remove later -->
         <ul>
-            <li><a href="cart.html">Cart Page</a>- allows the Customer to access the carts associated with them. (Carts table)</li>
-            <li><a href="order.html">Order Page</a>- allows the Customer to place an order using the Customer's billing address, products in the orders (Customer table, Orders table)</li>
-            <li><a href="product.html">Single Product Page</a>- allows the Customer to access the information in a Product instance (Product table).</li>
-            <li><a href="index.html">Product List Page</a>- allows the Customer to access the each product in the Products table.</li>
-            <li><a href="signin.html">Sign In Page</a>- allows the Customer to sign in and sign up (Customer table).</li>
+            <li><a href="./cart">Cart Page</a>- allows the Customer to access the carts associated with them. (Carts table)</li>
+            <li><a href="./order">Order Page</a>- allows the Customer to place an order using the Customer's billing address, products in the orders (Customer table, Orders table)</li>
+            <li><a href="./product">Single Product Page</a>- allows the Customer to access the information in a Product instance (Product table).</li>
+            <li><a href="./index">Product List Page</a>- allows the Customer to access the each product in the Products table.</li>
+            <li><a href="./signin">Sign In Page</a>- allows the Customer to sign in and sign up (Customer table).</li>
         </ul>
         <!-- -->
 
