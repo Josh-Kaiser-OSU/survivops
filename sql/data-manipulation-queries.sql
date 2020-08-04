@@ -29,19 +29,33 @@ INSERT INTO `products_orders` (order_id, product_id, product_quantity)
 VALUES (:order_id, :product_id, :product_quantity);
 
 -- READ
-`customers`
+SELECT customer_id, fname, lname, email, phone_number 
+FROM `customers`;
 
     --    READ cart (Requires a join)
 SELECT carts.cart_name AS cart_name, products.product_name AS product_name, products.price AS price, cart_item.product_quantity AS quantity 
-FROM (SELECT cart_id, customer_id, cart_name FROM carts WHERE customer_id = :customer_id) AS carts 
-INNER JOIN products_carts AS cart_item ON carts.cart_id = cart_item.cart_id 
-INNER JOIN products ON products.product_id = cart_item.product_id;
+FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE customer_id = :customer_id) AS carts 
+INNER JOIN `products_carts` AS cart_item ON carts.cart_id = cart_item.cart_id 
+INNER JOIN `products` ON products.product_id = cart_item.product_id;
 
 SELECT customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date
 FROM `orders`
-WHERE order_id=:order_id
+WHERE order_id=:order_id;
 
-SELECT product_name, category, vendor, price, image, quantity_available FROM products WHERE category = :category;
+
+SELECT product_name, category, vendor, price, image, quantity_available 
+FROM `products` WHERE category = :category;
+
+SELECT orders.billing_street, orders.billing_city, orders.billing_state, orders.billing_zip, orders.shipping_street, orders.shipping_city, orders.shipping_state, orders.shipping_zip, orders.shipped, orders.pickup_or_ship, orders.has_paid, orders.delivered, orders.order_date, order_item.product_quantity, products.product_name, products.category, products.vendor, products.price, products.image, products.quantity_available 
+FROM (SELECT * FROM `orders` WHERE orders.order_id=:order_id) AS orders
+INNER JOIN `products_orders` AS order_item ON orders.order_id=order_item.order_id
+INNER JOIN `products` ON products.product_id=order_item.product_id;
+-- OR --
+SELECT orders.billing_street, orders.billing_city, orders.billing_state, orders.billing_zip, orders.shipping_street, orders.shipping_city, orders.shipping_state, orders.shipping_zip, orders.shipped, orders.pickup_or_ship, orders.has_paid, orders.delivered, orders.order_date, order_item.product_quantity, products.product_name, products.category, products.vendor, products.price, products.image, products.quantity_available 
+FROM `orders`
+INNER JOIN `products_orders` AS order_item ON orders.order_id=order_item.order_id
+INNER JOIN `products` ON products.product_id=order_item.product_id
+WHERE orders.order_id=:order_id;
 
 -- UPDATE
 UPDATE `customers` 
