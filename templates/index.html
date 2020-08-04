@@ -1,84 +1,82 @@
-{% extends layouts/main.html %}
+{% extends "layouts/main.html" %}
 
 {% block css_file %}
 {{ url_for('static', filename='styles/index.css') }}
 {% endblock %}
 
 {% block content %}
-        <div id="products" class="container">
-            <div class="row">
-                <div class="list-group col-2" id="categories">
-                    <ul>
-                        <li class="list-group-item">Filters</h2>
-                        <li class="list-group-item"><a href="#">category 1</a></li>
-                        <li class="list-group-item"><a href="#">category 2</a></li>
-                        <li class="list-group-item"><a href="#">category 3</a></li>
-                    </ul>
-                </div>
-                <div class="col-10" id="product-grid">
-                    <ul class="">
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 1 image">
-                            <p>Product 1 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 2 image">
-                            <p>Product 2 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 3 image">
-                            <p>Product 3 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 4 image">
-                            <p>Product 4 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 5 image">
-                            <p>Product 5 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 5 image">
-                            <p>Product 6 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 5 image">
-                            <p>Product 7 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 5 image">
-                            <p>Product 8 Name</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="product.html">
-                            <img src="#" alt="product 5 image">
-                            <p>Product 9 Name</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<div id="products" class="container">
+    <div class="row">
+        <div class="list-group col-2" id="categories">
+            <ul>
+                <li class="list-group-item">Filters</h2>
+                <li class="list-group-item"><a href="#">category 1</a></li>
+                <li class="list-group-item"><a href="#">category 2</a></li>
+                <li class="list-group-item"><a href="#">category 3</a></li>
+            </ul>
         </div>
-        {% endblock %}
+        <div class="col-10" id="product-grid">
+            <ul class="">
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 1 image">
+                    <p>Product 1 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 2 image">
+                    <p>Product 2 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 3 image">
+                    <p>Product 3 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 4 image">
+                    <p>Product 4 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 5 image">
+                    <p>Product 5 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 5 image">
+                    <p>Product 6 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 5 image">
+                    <p>Product 7 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 5 image">
+                    <p>Product 8 Name</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="product.html">
+                    <img src="#" alt="product 5 image">
+                    <p>Product 9 Name</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
  
-        {% block js_file%}
-        "js/index.js"
-        {% endblock%}
-    </body>
-</html>
+{% block js_file%}
+{{ url_for('static', filename='js/index.js') }}
+{% endblock%}
