@@ -1,201 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administrator Page</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
-  <!-- BootstrapCDN -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
-  <!-- Navigation bar -->
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom">
-    <a href="index.html">
-      <img src="#" alt="Logo">
-    </a>
-    <h1 class="my-0 mr-md-auto font-weight-normal">Company Name</h1>
-    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="signin.html">Sign In</a>
-      <a class="p-2 text-dark" href="cart.html">View Cart</a>
-      <a class="p-2 text-dark" href="contact.html">Contact</a>
-      <a class="p-2 text-dark" href="account.html">My Account</a>
-      <a class="p-2 text-dark" href="admin.html">Admin Page</a>
-    </nav>
+{% extends "layouts/main.html" %}
+
+{% block css_file %}
+{{ url_for('static', filename='styles/admin.css') }}
+{% endblock %}
+
+{% block content %}
+<h1>Administrator Dashboard</h1>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">Customer List</h2>
+    <h3 class="card-subtitle text-muted">A list of all customers in the database.</h3>
+    <table id="customer-table">
+      <thead>
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Phone number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bobby</td>
+          <td>Vasquez</td>
+          <td>BobbyBVasquez@teleworm.us</td>
+          <td>aeChai3ei</td>
+          <td>617-977-2777</td>
+        </tr>
+        <tr>
+          <td>Tammie</td>
+          <td>Becher</td>
+          <td>TammieMBecher@jourrapide.com</td>
+          <td>Ua6owoh8</td>
+          <td>276-356-3187</td>
+        </tr>
+        <tr>
+          <td>Alma</td>
+          <td>Cardenas</td>
+          <td>AlmaRCardenas@dayrep.com</td>
+          <td>WohTh8yah4</td>
+          <td>740-340-2367</td>
+        </tr>
+        <tr>
+          <td>Blossom</td>
+          <td>Sierra</td>
+          <td>BlossomBSierra@jourrapide.com</td>
+          <td>eiFoo1ahCh</td>
+          <td>785-960-2683</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <!-- Remove later -->
-  <ul>
-    <li><a href="cart.html">Cart Page</a>- allows the Customer to access the carts associated with them. (Carts table)</li>
-    <li><a href="order.html">Order Page</a>- allows the Customer to place an order using the Customer's billing address, products in the orders (Customer table, Orders table)</li>
-    <li><a href="product.html">Single Product Page</a>- allows the Customer to access the information in a Product instance (Product table).</li>
-    <li><a href="index.html">Product List Page</a>- allows the Customer to access the each product in the Products table.</li>
-    <li><a href="signin.html">Sign In Page</a>- allows the Customer to sign in and sign up (Customer table).</li>
-  </ul>
-  <!-- -->
-  <h1>Administrator Dashboard</h1>
-  <div class="card">
-    <div class="card-body">
-      <h2 class="card-title">Customer List</h2>
-      <h3 class="card-subtitle text-muted">A list of all customers in the database.</h3>
-      <table id="customer-table">
-        <thead>
-          <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Phone number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Bobby</td>
-            <td>Vasquez</td>
-            <td>BobbyBVasquez@teleworm.us</td>
-            <td>aeChai3ei</td>
-            <td>617-977-2777</td>
-          </tr>
-          <tr>
-            <td>Tammie</td>
-            <td>Becher</td>
-            <td>TammieMBecher@jourrapide.com</td>
-            <td>Ua6owoh8</td>
-            <td>276-356-3187</td>
-          </tr>
-          <tr>
-            <td>Alma</td>
-            <td>Cardenas</td>
-            <td>AlmaRCardenas@dayrep.com</td>
-            <td>WohTh8yah4</td>
-            <td>740-340-2367</td>
-          </tr>
-          <tr>
-            <td>Blossom</td>
-            <td>Sierra</td>
-            <td>BlossomBSierra@jourrapide.com</td>
-            <td>eiFoo1ahCh</td>
-            <td>785-960-2683</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">List customer orders</h2>
+    <h3 class="card-subtitle text-muted">Enter a customer's ID below to show all orders belonging to the customer.</h3>
+    <form>
+      <div class="form-group">
+        <label for="customer-id">Customer ID</label><br>
+        <input type="text" id="customer-id" name="customer-id">
+      </div>
+      <button type="submit" class="btn btn-primary" id="customer-search-btn">Search</button>
+    </form>
   </div>
-  <div class="card">
-    <div class="card-body">
-      <h2 class="card-title">List customer orders</h2>
-      <h3 class="card-subtitle text-muted">Enter a customer's ID below to show all orders belonging to the customer.</h3>
-      <form>
-        <div class="form-group">
-          <label for="customer-id">Customer ID</label><br>
-          <input type="text" id="customer-id" name="customer-id">
-        </div>
-        <button type="submit" class="btn btn-primary" id="customer-search-btn">Search</button>
-      </form>
-    </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">Product Inventory Management</h2>
+    <h3 class="card-subtitle text-muted">Add, update, or delete products from the inventory.</h3>
+    <form id="add-new-product-form">
+      <div class="form-group">
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Vendor</th>
+              <th>Price</th>
+              <th>Qty Available</th>
+              <th>Image</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="new-product-name" name="new-product-name" required">
+              </td>
+              <td>
+                <input type="text" id="new-category" name="new-category" required">
+              </td>
+              <td>
+                <input type="text" id="new-vendor" name="new-vendor" required>
+              </td>
+              <td>
+                <input type="text" id="new-price" name="new-price" required>
+              </td>
+              <td>
+                <input type="text" id="new-qty-available" name="new-qty-available" required>
+              </td>
+              <td>
+                <input type="file" id="new-image" name="new-image" accept="image/png, image/jpeg, .webp, .tiff, .tif" required>
+              </td>
+            </tr>
+            <tr>
+              <td id="new-product-cell">
+                <button type="button" class="btn btn-primary" id="new-product-btn">Add product</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Vendor</th>
+          <th>Price</th>
+          <th>Qty Available</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Swift-1000 Kayak</td>
+          <td>Activity-Gear</td>
+          <td>Best Kayaks Co.</td>
+          <td>$300.00</td>
+          <td>6</td>
+          <td><img src="images/100x100-placeholder.png"></td>
+          <td>
+            <button type="button" class="update-btn">Update</button>
+            <button type="button" class="delete-btn">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Snuggle-4000 Sleeping Bag</td>
+          <td>Sleeping</td>
+          <td>Best Sleeping Bags Co.</td>
+          <td>$40.00</td>
+          <td>18</td>
+          <td><img src="images/100x100-placeholder.png"></td>
+          <td>
+            <button type="button" class="update-btn">Update</button>
+            <button type="button" class="delete-btn">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Scrumptious-2000 Spork</td>
+          <td>Eating</td>
+          <td>Best Sporks Co.</td>
+          <td>$7.00</td>
+          <td>43</td>
+          <td><img src="images/100x100-placeholder.png"></td>
+          <td>
+            <button type="button" class="update-btn">Update</button>
+            <button type="button" class="delete-btn">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
   </div>
-  <div class="card">
-    <div class="card-body">
-      <h2 class="card-title">Product Inventory Management</h2>
-      <h3 class="card-subtitle text-muted">Add, update, or delete products from the inventory.</h3>
-      <form id="add-new-product-form">
-        <div class="form-group">
-          <table>
-            <thead>
-              <tr>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Vendor</th>
-                <th>Price</th>
-                <th>Qty Available</th>
-                <th>Image</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <input type="text" id="new-product-name" name="new-product-name" required">
-                </td>
-                <td>
-                  <input type="text" id="new-category" name="new-category" required">
-                </td>
-                <td>
-                  <input type="text" id="new-vendor" name="new-vendor" required>
-                </td>
-                <td>
-                  <input type="text" id="new-price" name="new-price" required>
-                </td>
-                <td>
-                  <input type="text" id="new-qty-available" name="new-qty-available" required>
-                </td>
-                <td>
-                  <input type="file" id="new-image" name="new-image" accept="image/png, image/jpeg, .webp, .tiff, .tif" required>
-                </td>
-              </tr>
-              <tr>
-                <td id="new-product-cell">
-                  <button type="button" class="btn btn-primary" id="new-product-btn">Add product</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </form>
-      <table>
-        <thead>
-          <tr>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Vendor</th>
-            <th>Price</th>
-            <th>Qty Available</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Swift-1000 Kayak</td>
-            <td>Activity-Gear</td>
-            <td>Best Kayaks Co.</td>
-            <td>$300.00</td>
-            <td>6</td>
-            <td><img src="images/100x100-placeholder.png"></td>
-            <td>
-              <button type="button" class="update-btn">Update</button>
-              <button type="button" class="delete-btn">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Snuggle-4000 Sleeping Bag</td>
-            <td>Sleeping</td>
-            <td>Best Sleeping Bags Co.</td>
-            <td>$40.00</td>
-            <td>18</td>
-            <td><img src="images/100x100-placeholder.png"></td>
-            <td>
-              <button type="button" class="update-btn">Update</button>
-              <button type="button" class="delete-btn">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Scrumptious-2000 Spork</td>
-            <td>Eating</td>
-            <td>Best Sporks Co.</td>
-            <td>$7.00</td>
-            <td>43</td>
-            <td><img src="images/100x100-placeholder.png"></td>
-            <td>
-              <button type="button" class="update-btn">Update</button>
-              <button type="button" class="delete-btn">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>    
-    </div>
-  </div>
-  <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block js_file %}
+{{ url_for('static', filename='js/admin.css') }}
+{% endblock %}
