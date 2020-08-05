@@ -1,10 +1,20 @@
 from flask import Flask, render_template
+from flask import request, redirect
+from db_connector.db_connector import connect_to_database, execute_query
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    print("Fetching and rendering products web page")
+    db_connection = connect_to_database()
+    query = "SELECT product_name, category, vendor, price, image, quantity_available FROM `products`;"
+    result = execute_query(db_connection, query).fetchall()
+    categories = []
+    for r in result:
+        categories.append(r[1])
+    print(categories)
+    return render_template("index.html", rows=result, categories=categories)
 
 @app.route("/signin")
 def signin():

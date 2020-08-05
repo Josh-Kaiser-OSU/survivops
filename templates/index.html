@@ -10,67 +10,25 @@
         <div class="list-group col-2" id="categories">
             <ul>
                 <li class="list-group-item">Filters</h2>
-                <li class="list-group-item"><a href="#">category 1</a></li>
-                <li class="list-group-item"><a href="#">category 2</a></li>
-                <li class="list-group-item"><a href="#">category 3</a></li>
+                {% for c in categories %}
+                <li class="list-group-item"><a href="#">{{c}}</a></li>
+                {% endfor %}
             </ul>
         </div>
+    
         <div class="col-10" id="product-grid">
-            <ul class="">
-                <li class="">
+            <ul>
+                {% for r in rows %}
+                <li>
                     <a href="product.html">
-                    <img src="#" alt="product 1 image">
-                    <p>Product 1 Name</p>
+                    <img src="{{r[4]}}" alt="product image">
+                    <p>{{r[0]}}</p>
+                    <p>{{r[1]}}</p>
+                    <p>{{r[2]}}</p>
+                    <p>${{r[3]}}</p>
                     </a>
                 </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 2 image">
-                    <p>Product 2 Name</p>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 3 image">
-                    <p>Product 3 Name</p>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 4 image">
-                    <p>Product 4 Name</p>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 5 image">
-                    <p>Product 5 Name</p>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 5 image">
-                    <p>Product 6 Name</p>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 5 image">
-                    <p>Product 7 Name</p>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 5 image">
-                    <p>Product 8 Name</p>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 5 image">
-                    <p>Product 9 Name</p>
-                    </a>
-                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
