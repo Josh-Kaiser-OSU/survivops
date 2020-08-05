@@ -57,7 +57,8 @@ def home():
     query = "SELECT * from diagnostic;"
     result = execute_query(db_connection, query)
     for r in result:
-        print(f"{r[0]}, {r[1]}")
+        # print(f"{r[0]}, {r[1]}")
+        print(str(r[0]) + ',' + str(r[1]))
     return render_template('home.html', result = result)
 
 @webapp.route('/db_test')
