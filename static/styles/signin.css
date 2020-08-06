@@ -37,11 +37,11 @@ div label {
   padding: 10px;
 }
 
-#sign-in-button{
+#sign-in-button-container {
   margin-top: 15px;
 }
 
-#sign-in-button input{
+#sign-in-button {
   width: 10em;
   height: 2em;
   margin-top: 1em;
@@ -52,11 +52,11 @@ div label {
   font-size: 0.8em;
 }
 
-#sign-up-button{
+#sign-up-button-container {
   margin-top: 15px;
 }
 
-#sign-up-button input{
+#sign-up-button {
   width: 10em;
   height: 2em;
   margin-top: 1em;
