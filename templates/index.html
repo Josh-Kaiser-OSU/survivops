@@ -8,12 +8,12 @@
 <div id="products" class="container">
     <div class="row">
         <div class="list-group col-2" id="categories">
-            <ul>
+            <form action="/" method="POST">
                 <li class="list-group-item">Filters</h2>
                 {% for c in categories %}
                 <li class="list-group-item"><a href="#">{{c}}</a></li>
                 {% endfor %}
-            </ul>
+            </form>
         </div>
     
         <div class="col-10" id="product-grid">

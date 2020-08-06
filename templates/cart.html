@@ -20,46 +20,18 @@
             <form action="order.html">
             <h2 id="cart-name">Cart</h2>
             <ul class="">
+                {% for item in cartitems %}
                 <li class="">
                     <a href="product.html">
                     <img src="#" alt="product 1 image">
                     </a>
-                    <p>Product 1 Name</p>
-                    <label class="qty-label" for="">Quantity: <input class="qty-input" type="number"></label>
+                    <p>{{item[0]}}</p>
+                    <p>{{item[1]}}</p>
+                    <p>${{item[2]}}</p>
+                    <label class="qty-label" for="">Quantity: <input class="qty-input" type="number" value="{{item[3]}}"></label>
                     <button class="btn btn-primary remove-btn">Remove From Cart</button>
                 </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 1 image">
-                    </a>
-                    <p>Product 2 Name</p>
-                    <label class="qty-label" for="">Quantity: <input class="qty-input" type="number"></label>
-                    <button class="btn btn-primary remove-btn">Remove From Cart</button>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 1 image">
-                    </a>
-                    <p>Product 3 Name</p>
-                    <label class="qty-label" for="">Quantity: <input class="qty-input" type="number"></label>
-                    <button class="btn btn-primary remove-btn">Remove From Cart</button>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 1 image">
-                    </a>
-                    <p>Product 4 Name</p>
-                    <label class="qty-label" for="">Quantity: <input class="qty-input" type="number"></label>
-                    <button class="btn btn-primary remove-btn">Remove From Cart</button>
-                </li>
-                <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 1 image">
-                    </a>
-                    <p>Product 5 Name</p>
-                    <label class="qty-label" for="">Quantity: <input class="qty-input" type="number"></label>
-                    <button class="btn btn-primary remove-btn">Remove From Cart</button>
-                </li>
+                {% endfor %}
             </ul>
             <button class="btn btn-danger" type="">Delete Cart</button>
             <button class="btn btn-primary" type="submit">Checkout</button>
