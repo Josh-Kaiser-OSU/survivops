@@ -28,10 +28,17 @@ function requestUserSignIn() {
 
   console.log('sign_in_data JSON object is:', sign_in_data);  // todo: remove
 
-  // Send a GET request to the server
-  let req = new XMLHttpRequest();
-  req.open('POST', './attemptLogin', false);
+  // Send a POST request to the server
+  var req = new XMLHttpRequest();
+  req.open('POST', './signin', true);
   req.setRequestHeader('Content-Type', 'application/json');
-  req.send(sign_in_data);
+  req.addEventListener('load', function() {
+    if (req.status >= 200 && req.status < 400) {
+      console.log('Request successful. req.responseText:', JSON.parse(req.responseText));
+    } else {
+      console.log('Error in network request: ' + req.statusText);
+    }
+  });
+  req.send(JSON.stringify(sign_in_data));
   event.preventDefault();
 }
