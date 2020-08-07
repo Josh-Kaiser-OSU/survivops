@@ -18,9 +18,15 @@ def home():
         print(categories)
         return render_template("index.html", rows=result, categories=categories)
 
-@app.route("/signin")
+@app.route('/signin')
 def signin():
     return render_template("signin.html")
+
+@app.route('/attemptLogin', methods=['GET', 'POST'])
+def attemptLogin():
+    if request.method == 'POST':
+        print('request.form is:', request.form)
+    return render_template("signin.html")  # todo: remove
 
 @app.route("/product")
 def product():
