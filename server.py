@@ -1,10 +1,9 @@
-from flask import Flask, render_template
-from flask import request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from db_connector.db_connector import connect_to_database, execute_query
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
         print("Fetching and rendering products web page")
@@ -22,7 +21,7 @@ def home():
 def signin():
     if request.method == 'POST':
         print('in /signin POST handler')
-        return render_template("signin.html")
+        return redirect(url_for('home'))
 
     if request.method == 'GET':
         return render_template("signin.html")
