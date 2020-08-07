@@ -30,15 +30,16 @@ function requestUserSignIn() {
 
   // Send a POST request to the server
   var req = new XMLHttpRequest();
-  req.open('POST', './signin', true);
+  req.open('GET', './', true);
   req.setRequestHeader('Content-Type', 'application/json');
-  req.addEventListener('load', function() {
-    if (req.status >= 200 && req.status < 400) {
-      console.log('Request successful. req.responseText:', JSON.parse(req.responseText));
-    } else {
-      console.log('Error in network request: ' + req.statusText);
-    }
-  });
-  req.send(JSON.stringify(sign_in_data));
-  event.preventDefault();
+  // req.addEventListener('load', function() {
+  //   if (req.status >= 200 && req.status < 400) {
+  //     console.log('req.status is okay:', req.status);
+  //     console.log('Request successful. req.responseText:', req.responseText);
+  //   } else {
+  //     console.log('Error in network request: ' + req.statusText);
+  //   }
+  // });
+  req.send(null);
+  // event.preventDefault();
 }
