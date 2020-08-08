@@ -13,19 +13,22 @@
             <th>Order ID</th>
             <th>Shipping Address</th>
             <th>Status</th>
-            <th>Price</th>
+            <th>Order Placed</th>
             <th></th>
         </thead>
         {% for order in orders %}
         <tr>
             <td>{{order[0]}}</td>
             <td>{{order[5]}} {{order[6]}}, {{order[7]}} {{order[8]}}</td>
-            {% if order[10]==1 %}
-            <td>{{order[3]}}</td>
+            <!-- order[10] is shipped-->
+            {% if order[12]==1 %}
+            <td>Delivered</td>
+            {% elif order[9]==1%}
+            <td>Shipped</td>
             {% else %}
-            <td>ELSE BLOCK</td>
+            <td>At warehouse</td>
             {% endif %}
-            <td>${{order[4]}}</td>
+            <td>{{order[13]}}</td>
             <td><button class="btn btn-primary">Return</button></td>
         </tr>
         {% endfor %}
