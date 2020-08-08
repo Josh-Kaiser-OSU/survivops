@@ -16,35 +16,24 @@
             <th>Price</th>
             <th></th>
         </thead>
+        {% for order in orders %}
         <tr>
-            <td>39480203984</td>
-            <td>7920 E Customer Lane, Los Angeles, CA 90210</td>
-            <td>Shipped</td>
-            <td>$54.38</td>
+            <td>{{order[1]}}</td>
+            <td>{{order[2]}}</td>
+            <td>{{order[3]}}</td>
+            <td>${{order[4]}}</td>
             <td><button class="btn btn-primary">Return</button></td>
         </tr>
-        <tr>
-            <td>222302093</td>
-            <td>2 E Customer Lane, Los Angeles, CA 90210</td>
-            <td>Arrived</td>
-            <td>$1004.38</td>
-            <td><button class="btn btn-primary">Return</button></td>
-        </tr>
-        <tr>
-            <td>092119836</td>
-            <td>893 E Customer Lane, Los Angeles, CA 90210</td>
-            <td>Ready for pickup</td>
-            <td>$1.38</td>
-            <td><button class="btn btn-primary">Return</button></td>
-        </tr>
+        {% endfor %}
     </table><br>
 
     <!-- Update Account Details-->
     <h3>Update Account</h3>
     <form action="#">
-        <label for="">Update Email<br><input type="email"></label><br>
-        <label for="">Change password<br><input type="text"></label><br>
-        <label for="">Repeat password<br><input type="text"></label><br>
+        <label for="">Update Email<br><input type="email" value="{{info[0][3]}}"></label><br>
+        <label for="">Change password<br><input type="text" value="{{info[0][4]}}"></label><br>
+        <label for="">Repeat password<br><input type="text" value="{{info[0][4]}}"></label><br>
+        <label for="">Change phone number<br><input type="text" value="{{info[0][5]}}"></label><br>
         <button class="btn btn-primary" type="submit">Save Changes</button>
     </form>
 
