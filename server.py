@@ -53,19 +53,19 @@ def order():
 @app.route("/account")
 def account():
     # Will get customer_id based on user input later
-    customer_id = 1
+    customer_id = 2
     db_connection = connect_to_database()
     query = ''.join(["SELECT customer_id, fname, lname, email, password, phone_number ",
     "FROM `customers` WHERE customer_id=",
     str(customer_id), ";"])
     result = execute_query(db_connection, query).fetchall()
     print(result)
-    query = ''.join(["SELECT carts.cart_name AS cart_name, products.product_name AS product_name, ",
-    "products.price AS price, cart_item.product_quantity AS quantity ",
-    "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE customer_id = ",
-    str(customer_id),
-    ") AS carts INNER JOIN `products_carts` AS cart_item ON carts.cart_id = cart_item.cart_id ",
-    "INNER JOIN `products` ON products.product_id = cart_item.product_id;"])
+    query = ''.join([
+        "SELECT order_id, billing_street, billing_city, billing_state, billing_zip, ",
+        "shipping_street, shipping_city, shipping_state, shipping_zip, shipped, ",
+        "pickup_or_ship, has_paid, delivered, order_date FROM `orders` WHERE customer_id=",
+        str(customer_id), ";"
+    ])
     orders = execute_query(db_connection, query).fetchall()
     print(orders)
     return render_template("account.html", info=result, orders=orders)

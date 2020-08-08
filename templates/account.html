@@ -18,9 +18,13 @@
         </thead>
         {% for order in orders %}
         <tr>
-            <td>{{order[1]}}</td>
-            <td>{{order[2]}}</td>
+            <td>{{order[0]}}</td>
+            <td>{{order[5]}} {{order[6]}}, {{order[7]}} {{order[8]}}</td>
+            {% if order[10]==1 %}
             <td>{{order[3]}}</td>
+            {% else %}
+            <td>ELSE BLOCK</td>
+            {% endif %}
             <td>${{order[4]}}</td>
             <td><button class="btn btn-primary">Return</button></td>
         </tr>
