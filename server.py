@@ -20,7 +20,20 @@ def home():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'POST':
-        print('in /signin POST handler')
+        db_connection = connect_to_database()
+
+        # Gather all customer data
+        fname = request.form['sign-up-fname-field']
+        lname = request.form['sign-up-lname-field']
+        email = request.form['sign-up-email-field']
+        password = request.form['sign-up-password-field']
+        phone = request.form['sign-up-phone-number-field']
+
+        query = 'INSERT INTO `customers` (fname, lname, email, password, phone_number) \
+                 VALUES (%s, %s, %s, %s, %s);'
+        customer_data = (fname, lname, email, password, phone)
+        execute_query(db_connection, query, customer_data)
+
         return redirect(url_for('home'))
 
     if request.method == 'GET':
