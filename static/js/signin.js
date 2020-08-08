@@ -1,45 +1,28 @@
-/*
-Some of the code in this file is courtesy of CS 290 course materials, especially
-Timothy Yoon's HW Assignment 6. Such code includes:
-a. Creating and sending HTTP requests
-(https://eecs.oregonstate.edu/ecampus-video/CS290/core-content/ajax-forms/js-http.html)
-b. Creating and using promises
-*/
+let sign_up_btn = document.getElementById('sign-up-button');
 
-// Add click event listeners to all buttons on the page once the HTML is
-// loaded and parsed
-document.addEventListener('DOMContentLoaded', signInListener);
-// document.addEventListener('DOMContentLoaded', signUpListener);  // todo
+// Disable the sign-up button when the HTML is loaded and parsed
+document.addEventListener('DOMContentLoaded', toggleDisableSignUp);
 
-function signInListener() {
-  let sign_in_button = document.getElementById('sign-in-button');
-  sign_in_button.addEventListener('click', requestUserSignIn);
+// Toggle the disabling of the sign-up button
+function toggleDisableSignUp() {
+  sign_up_btn.toggleAttribute('disabled');
 }
 
-function requestUserSignIn() {
-  // Collect all form data to send as a JSON object
-  let email_data = document.getElementById('sign-in-email-field').value;
-  let password_data = document.getElementById('sign-in-password-field').value;
+let firstPwdField = document.getElementById('sign-up-password-field');
+let secondPwdField = document.getElementById('sign-up-confirm-password-field');
 
-  let sign_in_data = {
-    sign_in_email: email_data,
-    sign_in_password: password_data
-  };
+// Whenever the sign-up password fields are changed, check whether
+// they hold equal values
+firstPwdField.addEventListener('input', pwdListener);
+secondPwdField.addEventListener('input', pwdListener);
 
-  console.log('sign_in_data JSON object is:', sign_in_data);  // todo: remove
-
-  // Send a POST request to the server
-  var req = new XMLHttpRequest();
-  req.open('GET', './', true);
-  req.setRequestHeader('Content-Type', 'application/json');
-  // req.addEventListener('load', function() {
-  //   if (req.status >= 200 && req.status < 400) {
-  //     console.log('req.status is okay:', req.status);
-  //     console.log('Request successful. req.responseText:', req.responseText);
-  //   } else {
-  //     console.log('Error in network request: ' + req.statusText);
-  //   }
-  // });
-  req.send(null);
-  // event.preventDefault();
+function pwdListener() {
+  // If the first and second passwords are equal, enable the sign-up button
+  if (firstPwdField.value === secondPwdField.value) {
+    toggleDisableSignUp();
+  }
+  // If the button is enabled and the passwords are not equal, disable the button
+  else if (!(sign_up_btn.hasAttribute('disabled')) && (firstPwdField.value !== secondPwdField.value)) {
+    toggleDisableSignUp();
+  }
 }
