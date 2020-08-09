@@ -39,9 +39,17 @@ def signin():
     if request.method == 'GET':
         return render_template("signin.html")
 
-@app.route("/product")
-def product():
-    return render_template("product.html")
+@app.route('/product/<int:product_id>', methods=['GET', 'POST'])
+def product(product_id):
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        # Get all info for the product with the given product_id
+        product_query = 'SELECT product_name, category, vendor, price, image, quantity_available \
+                         FROM `products` WHERE product_id = %s;' % (product_id)
+
+        return render_template("product.html")
+    else:
+        # todo
 
 @app.route("/cart")
 def cart():
