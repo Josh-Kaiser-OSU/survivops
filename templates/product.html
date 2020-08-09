@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block content %}
+<form action="/product" method="POST">
   <div class="container">
     <!-- Product image, title, and other info -->
     <div class="row">
       <div class="col-3" id="product-image-container">
-        <img src="images/220x300-placeholder.png" alt="Product Image">
+        <img src="static/images/220x300-placeholder.png" alt="Product Image">
       </div>
       <div class="col-9">
         <div class="row">
@@ -56,6 +57,7 @@
       </p>
     </div>
   </div>
+</form>
 {% endblock %}
 
 {% block js_file %}
