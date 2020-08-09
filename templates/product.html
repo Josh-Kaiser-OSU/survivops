@@ -10,22 +10,23 @@
     <!-- Product image, title, and other info -->
     <div class="row">
       <div class="col-3" id="product-image-container">
-        <img src="static/images/220x300-placeholder.png" alt="Product Image">
+        <!-- <img src="static/images/220x300-placeholder.png" alt="Product Image"> -->
+        {{ product[4] }}
       </div>
       <div class="col-9">
         <div class="row">
-          <h1>Product 1</h1>
+          <h1>{{ product[0] }}</h1>
         </div>
         <div class="row">
           <table class="table" id="product-table">
             <tbody>
               <tr>
                 <td>Available:</td>
-                <td>3</td>
+                <td>{{ product[5] }}</td>
               </tr>
               <tr>
                 <td>Price:</td>
-                <td>$5.00</td>
+                <td>${{ product[3] }}</td>
               </tr>
               <tr>
                 <td><label for="quantity-to-order">Quantity</label></td>
@@ -33,7 +34,7 @@
               </tr>
               <tr>
                 <td>Sold by:</td>
-                <td>Vendor 1</td>
+                <td>{{ product[2] }}</td>
               </tr>
             </tbody>
           </table>
