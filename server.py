@@ -46,10 +46,14 @@ def product(product_id):
         # Get all info for the product with the given product_id
         product_query = 'SELECT product_name, category, vendor, price, image, quantity_available \
                          FROM `products` WHERE product_id = %s;' % (product_id)
-
-        return render_template("product.html")
+        product_result = execute_query(db_connection, product_query).fetchone()
+        print("product_result is:", product_result)  # todo: remove
+        if product_result == None:
+            return "A product with id " + str(product_id) + " cannot be found."
+        
+        return render_template("product.html", product=product_result)
     else:
-        # todo
+        pass
 
 @app.route("/cart")
 def cart():
