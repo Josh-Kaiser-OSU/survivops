@@ -44,8 +44,7 @@ def product(product_id):
     db_connection = connect_to_database()
     if request.method == 'GET':
         # Get all info for the product with the given product_id
-        product_query = 'SELECT product_name, category, vendor, price, image, quantity_available \
-                         FROM `products` WHERE product_id = %s;' % (product_id)
+        product_query = 'SELECT * FROM `products` WHERE product_id = %s;' % (product_id)
         product_result = execute_query(db_connection, product_query).fetchone()
         print("product_result is:", product_result)  # todo: remove
         if product_result == None:
@@ -57,8 +56,8 @@ def product(product_id):
         print("carts_result is:", carts_result)  # todo: remove
         
         return render_template("product.html", product=product_result, carts=carts_result)
-    else:
-        pass
+    elif request.method == 'POST':
+        return redirect(url_for('cart'))
 
 @app.route("/cart")
 def cart():
