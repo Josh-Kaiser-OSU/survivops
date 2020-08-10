@@ -50,8 +50,13 @@ def product(product_id):
         print("product_result is:", product_result)  # todo: remove
         if product_result == None:
             return "A product with id " + str(product_id) + " cannot be found."
+
+        # Get all carts from the database
+        carts_query = 'SELECT * FROM `carts`;'
+        carts_result = execute_query(db_connection, carts_query).fetchall()
+        print("carts_result is:", carts_result)  # todo: remove
         
-        return render_template("product.html", product=product_result)
+        return render_template("product.html", product=product_result, carts=carts_result)
     else:
         pass
 
