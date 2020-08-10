@@ -36,6 +36,17 @@
                 <td>Sold by:</td>
                 <td>{{ product[2] }}</td>
               </tr>
+              <tr>
+                <td><label for="cart-select">Cart selection:</label></td>
+                <td>
+                  <select name="carts" id="cart-select">
+                    <option value="">--Please choose a cart to add to--</option>
+                    {% for cart in carts %}
+                      <option value="{{ cart[0] }}">{{ cart[2] }}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
