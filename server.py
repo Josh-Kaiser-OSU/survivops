@@ -73,17 +73,17 @@ def product(product_id = 1):
                                   VALUES (%s, %s, %s);' % (cart_id, product_id, qty_to_order)
         add_prod_to_cart_result = execute_query(db_connection, add_prod_to_cart_query).fetchall()
 
-        return redirect(url_for('cart'))
+        return redirect(url_for('cart/2'))
 
 
-@app.route('/cart/', methods=['GET', 'POST'])
+@app.route('/cart/')
 @app.route('/cart/<int:customer_id>', methods=['GET', 'POST'])
 def cart(customer_id=1):
+    db_connection = connect_to_database()
     if request.method == 'GET':
         print("Fetching and rendering cart web page")
-        db_connection = connect_to_database()
         # Will get customer_id based on user input later
-        query = ''.join(["SELECT products.product_id, carts.cart_name AS cart_name, products.product_name AS product_name, ",
+        query = ''.join(["SELECT products.product_id, carts.cart_id, carts.cart_name AS cart_name, products.product_name AS product_name, ",
         "products.price AS price, cart_item.product_quantity AS quantity ",
         "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE customer_id = ",
         str(customer_id),
@@ -92,18 +92,26 @@ def cart(customer_id=1):
         result = execute_query(db_connection, query).fetchall()
         carts = set()
         for item in result:
-            carts.add(item[1])
+            carts.add(item[2])
         return render_template("cart.html", carts=carts, cartitems=result)
     elif request.method == 'POST':
         cmd = request.form['cmd']
         qty = request.form['quantity']
-        if cmd == "Remove"
+        cart_id = request.form['cart_id']
+        product_id = request.form['product_id']
+
+        query = "SELECT customer_id FROM `carts` WHERE cart_id=" + str(cart_id)
+        result = execute_query(db_connection, query).fetchall()
+        customer_id = result[0][0]
+        if cmd == "Remove":
             # Delete product from cart
-            query = "DELETE FROM `products_carts` WHERE cart_id = :cart_id AND product_id = :product_id;"
+            query = "DELETE FROM `products_carts` WHERE cart_id = " + str(cart_id) + " AND product_id = " + str(product_id) + ";"
+            result = execute_query(db_connection, query).fetchall()
         else:
             # Update product in cart
-
-        return "POSTED"
+            query = "UPDATE `products_carts` SET product_quantity=" + str(qty) + " WHERE cart_id=" + str(cart_id) + " AND product_id=" + str(product_id) + ";"
+            result = execute_query(db_connection, query).fetchall()
+        return redirect('cart/' + str(customer_id))
         
 
 @app.route("/order")
