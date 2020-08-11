@@ -74,28 +74,36 @@ def product(product_id):
 
         return redirect(url_for('cart'))
 
-#@app.route("/cart")
-@app.route("/cart/")
-@app.route("/cart/<int:customer_id>", methods=['GET', 'POST'])
+
+@app.route('/cart/', methods=['GET', 'POST'])
+@app.route('/cart/<int:customer_id>', methods=['GET', 'POST'])
 def cart(customer_id=1):
     if request.method == 'GET':
-        print("Fetching and rendering products web page")
+        print("Fetching and rendering cart web page")
         db_connection = connect_to_database()
         # Will get customer_id based on user input later
-        query = ''.join(["SELECT carts.cart_name AS cart_name, products.product_name AS product_name, ",
+        query = ''.join(["SELECT products.product_id, carts.cart_name AS cart_name, products.product_name AS product_name, ",
         "products.price AS price, cart_item.product_quantity AS quantity ",
         "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE customer_id = ",
         str(customer_id),
         ") AS carts INNER JOIN `products_carts` AS cart_item ON carts.cart_id = cart_item.cart_id ",
         "INNER JOIN `products` ON products.product_id = cart_item.product_id;"])
         result = execute_query(db_connection, query).fetchall()
-        print(result)
         carts = set()
         for item in result:
-            carts.add(item[0])
+            carts.add(item[1])
         return render_template("cart.html", carts=carts, cartitems=result)
     elif request.method == 'POST':
-        pass
+        cmd = request.form['cmd']
+        qty = request.form['quantity']
+        if cmd == "Remove"
+            # Delete product from cart
+            query = "DELETE FROM `products_carts` WHERE cart_id = :cart_id AND product_id = :product_id;"
+        else:
+            # Update product in cart
+
+        return "POSTED"
+        
 
 @app.route("/order")
 def order():

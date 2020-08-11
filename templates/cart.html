@@ -9,32 +9,33 @@
     <div class="row">
         <div class="list-group col-2" id="Carts">
             <ul>
-                <li class="list-group-item">Carts</h2>
+                <li class="list-group-item">Wishlists</h2>
                 {% for name in carts %}
                 <li class="list-group-item"><a href="#">{{name}}</a></li>
                 {% endfor %}
+                <li class="list-group-item"><button class="btn">NEW</button></li>
             </ul>
         </div>
         <div class="col-10" id="product-grid">
-            <form action="/">
             <h2 id="cart-name">Cart</h2>
             <ul class="">
                 {% for item in cartitems %}
                 <li class="">
-                    <a href="product.html">
-                    <img src="#" alt="product 1 image">
+                    <a href="/product/{{item[0]}}">
+                    <img src="#" alt="product image">
                     </a>
-                    <p>{{item[0]}}</p>
-                    <p>{{item[1]}}</p>
-                    <p>${{item[2]}}</p>
-                    <label class="qty-label" for="">Quantity: <input class="qty-input" type="number" value="{{item[3]}}"></label>
-                    <button class="btn btn-primary remove-btn">Remove From Cart</button>
+                    <p>{{item[2]}}</p>
+                    <p>${{item[3]}}</p>
+                    <form action='/cart/' method='POST'>
+                        <label class="qty-label" for="">Quantity: <input id="cart-quantity-update" class="qty-input" name="quantity" type="number" value="{{item[4]}}"></label>
+                        <button type="submit" name="cmd" value="Update" class="btn btn-primary">Update</button>
+                        <button type="submit" name="cmd" value="Remove" class="btn btn-danger">Remove</button>
+                    </form>
                 </li>
                 {% endfor %}
             </ul>
             <button class="btn btn-danger" type="">Delete Cart</button>
             <button class="btn btn-primary" type="submit">Checkout</button>
-        </form>
         </div>
     </div>
 </div>
