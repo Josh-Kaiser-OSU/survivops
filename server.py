@@ -16,6 +16,30 @@ def home():
         categories = list(categories)
         print(categories)
         return render_template("index.html", rows=result, categories=categories)
+    elif request.method == 'POST':
+        try:
+            category = request.form['category']
+        except KeyError:
+            category = ''
+        min_price = request.form['min-price']
+        max_price = request.form['max-price']
+        print(category, min_price, max_price)
+        db_connection = connect_to_database()
+        constraints = "WHERE 1"
+        if min_price != "":
+            constraints += " and price > " + str(min_price)
+        if max_price != "":
+            constraints += " and price < " + str(max_price)
+        if category != "":
+            constraints += ' and category="' + str(category) + '"'
+        query = "SELECT product_name, category, vendor, price, image, quantity_available FROM `products`" + constraints + ";"
+        result = execute_query(db_connection, query).fetchall()
+        categories = set()
+        for r in result:
+            categories.add(r[1])
+        categories = list(categories)
+        print(categories)
+        return render_template("index.html", rows=result, categories=categories)
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():

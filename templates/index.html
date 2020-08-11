@@ -10,9 +10,16 @@
         <div class="list-group col-2" id="categories">
             <form action="/" method="POST">
                 <li class="list-group-item">Filters</h2>
+                <li class="list-group-item">Categories</h2>
                 {% for c in categories %}
-                <li class="list-group-item"><a href="#">{{c}}</a></li>
+                <li class="list-group-item"><button class="btn btn-primary" type="submit" name="category" value="{{c}}">{{c}}</button></li>
                 {% endfor %}
+                <!-- Filter by price -->
+                <li class="list-group-item">Price</li>
+                <li class="list-group-item"><label for="">Minimum $<input type="number" name="min-price"></label></li>
+                <li class="list-group-item"><label for="">Maximum $<input type="number" name="max-price"></label></li>
+                <!-- Submit button -->
+                <li class="list-group-item"><button class="btn btn-primary" type="submit" name="submit" value="">Search</button></li>
             </form>
         </div>
     
