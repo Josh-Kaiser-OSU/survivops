@@ -39,8 +39,9 @@ def signin():
     if request.method == 'GET':
         return render_template("signin.html")
 
+@app.route('/product/')
 @app.route('/product/<int:product_id>', methods=['GET', 'POST'])
-def product(product_id):
+def product(product_id = 1):
     db_connection = connect_to_database()
     if request.method == 'GET':
         # Get all info for the product with the given product_id

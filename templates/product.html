@@ -43,7 +43,7 @@
               <tr>
                 <td><label for="cart-select">Cart selection:</label></td>
                 <td>
-                  <select name="carts" id="cart-select">
+                  <select name="carts" id="cart-select" required>
                     <option value="">--Please choose a cart to add to--</option>
                     {% for cart in carts %}
                       <option value="{{ cart[0] }}">{{ cart[2] }}</option>
@@ -56,6 +56,10 @@
         </div>
         <div class="row">
           <button type="submit" class="btn btn-success" id="add-to-cart-btn">Add to cart</button>
+          <div id="btn-note">
+            Note: If the cart you selected already has this product, then the cart will be updated
+            to have a new quantity of this product based on the quantity specified above.
+          </div>
         </div>
       </div>
     </div>
