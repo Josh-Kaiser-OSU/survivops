@@ -144,11 +144,23 @@ def cart(customer_id=1):
             query = "UPDATE `products_carts` SET product_quantity=" + str(qty) + " WHERE cart_id=" + str(cart_id) + " AND product_id=" + str(product_id) + ";"
             result = execute_query(db_connection, query).fetchall()
         return redirect('cart/' + str(customer_id))
-        
 
-@app.route("/order")
-def order():
-    return render_template("order.html")
+@app.route('/order/')
+@app.route('/order/<int:cart_id>', methods=['GET', 'POST'])
+def order(cart_id = 1):
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        # Get all rows from the products_carts table with the given cart_id
+        prod_in_cart_query = 'SELECT P.image, P.product_name, P.vendor, P.price, PC.product_quantity \
+                              FROM `products_carts` PC \
+                              INNER JOIN `products` P ON PC.product_id = P.product_id \
+                              WHERE cart_id = %s;' % (cart_id)
+        prod_in_cart_result = execute_query(db_connection, prod_in_cart_query).fetchall()
+        print("prod_in_cart_result is:", prod_in_cart_result)  # todo: remove
+        if prod_in_cart_result == None:
+            return "The cart with id " + str(cart_id) + " has no products."
+        
+        return render_template('order.html', cart_products=prod_in_cart_result)
 
 @app.route("/account")
 def account():
