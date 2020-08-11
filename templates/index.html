@@ -11,13 +11,14 @@
             <form action="/" method="POST">
                 <li class="list-group-item">Filters</h2>
                 <li class="list-group-item">Categories</h2>
+                <li class="list-group-item"><button class="btn btn-primary" type="submit" name="category" value="">All categories</button></li>
                 {% for c in categories %}
                 <li class="list-group-item"><button class="btn btn-primary" type="submit" name="category" value="{{c}}">{{c}}</button></li>
                 {% endfor %}
                 <!-- Filter by price -->
                 <li class="list-group-item">Price</li>
-                <li class="list-group-item"><label for="">Minimum $<input type="number" name="min-price"></label></li>
-                <li class="list-group-item"><label for="">Maximum $<input type="number" name="max-price"></label></li>
+                <li class="list-group-item"><label for="">Minimum $<input type="number" name="min-price" value="{{filters[0]}}"></label></li>
+                <li class="list-group-item"><label for="">Maximum $<input type="number" name="max-price" value="{{filters[1]}}"></label></li>
                 <!-- Submit button -->
                 <li class="list-group-item"><button class="btn btn-primary" type="submit" name="submit" value="">Search</button></li>
             </form>
@@ -27,12 +28,12 @@
             <ul>
                 {% for r in rows %}
                 <li>
-                    <a href="product.html">
+                    <a href="product/{{r[0]}}">
                     <img src="{{r[4]}}" alt="product image">
-                    <p>{{r[0]}}</p>
                     <p>{{r[1]}}</p>
                     <p>{{r[2]}}</p>
-                    <p>${{r[3]}}</p>
+                    <p>{{r[3]}}</p>
+                    <p>${{r[4]}}</p>
                     </a>
                 </li>
                 {% endfor %}

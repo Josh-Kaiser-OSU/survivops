@@ -8,14 +8,17 @@ def home():
     if request.method == 'GET':
         print("Fetching and rendering products web page")
         db_connection = connect_to_database()
-        query = "SELECT product_name, category, vendor, price, image, quantity_available FROM `products`;"
+        query = "SELECT product_id, product_name, category, vendor, price, image, quantity_available FROM `products`;"
         result = execute_query(db_connection, query).fetchall()
+        
+        # Get all the categories
+        query = "SELECT category FROM `products`;"
+        category_result = execute_query(db_connection, query).fetchall()
         categories = set()
-        for r in result:
-            categories.add(r[1])
-        categories = list(categories)
-        print(categories)
-        return render_template("index.html", rows=result, categories=categories)
+        for r in category_result:
+            categories.add(r[0])
+
+        return render_template("index.html", rows=result, categories=categories, filters=['',''])
     elif request.method == 'POST':
         try:
             category = request.form['category']
@@ -32,14 +35,17 @@ def home():
             constraints += " and price < " + str(max_price)
         if category != "":
             constraints += ' and category="' + str(category) + '"'
-        query = "SELECT product_name, category, vendor, price, image, quantity_available FROM `products`" + constraints + ";"
+        query = "SELECT product_id, product_name, category, vendor, price, image, quantity_available FROM `products`" + constraints + ";"
         result = execute_query(db_connection, query).fetchall()
+
+        # Get all the categories
+        query = "SELECT category FROM `products`;"
+        category_result = execute_query(db_connection, query).fetchall()
         categories = set()
-        for r in result:
-            categories.add(r[1])
-        categories = list(categories)
-        print(categories)
-        return render_template("index.html", rows=result, categories=categories)
+        for r in category_result:
+            categories.add(r[0])
+        
+        return render_template("index.html", rows=result, categories=categories, filters=[min_price, max_price])
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
