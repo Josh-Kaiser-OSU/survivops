@@ -33,7 +33,6 @@ label {
 }
 
 #order-summary-inner {
-  position: fixed;
   width: 400px;
 }
 
@@ -44,11 +43,6 @@ label {
 
 #order-button-container {
   text-align: center;
-}
-
-#order-button {
-  color: black;
-  background-color: lightsalmon;
 }
 
 #shipping-first-name, #shipping-city, #shipping-state, #expiration-date, #billing-city, #billing-state, #phone-number {
