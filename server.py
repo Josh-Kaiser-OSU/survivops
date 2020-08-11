@@ -74,21 +74,28 @@ def product(product_id):
 
         return redirect(url_for('cart'))
 
-@app.route("/cart")
-def cart():
-    print("Fetching and rendering products web page")
-    db_connection = connect_to_database()
-    # Will get customer_id based on user input later
-    customer_id = 2
-    query = ''.join(["SELECT carts.cart_name AS cart_name, products.product_name AS product_name, ",
-    "products.price AS price, cart_item.product_quantity AS quantity ",
-    "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE customer_id = ",
-    str(customer_id),
-    ") AS carts INNER JOIN `products_carts` AS cart_item ON carts.cart_id = cart_item.cart_id ",
-    "INNER JOIN `products` ON products.product_id = cart_item.product_id;"])
-    result = execute_query(db_connection, query).fetchall()
-    print(result)
-    return render_template("cart.html", cartitems=result)
+#@app.route("/cart")
+@app.route("/cart/")
+@app.route("/cart/<int:customer_id>", methods=['GET', 'POST'])
+def cart(customer_id=1):
+    if request.method == 'GET':
+        print("Fetching and rendering products web page")
+        db_connection = connect_to_database()
+        # Will get customer_id based on user input later
+        query = ''.join(["SELECT carts.cart_name AS cart_name, products.product_name AS product_name, ",
+        "products.price AS price, cart_item.product_quantity AS quantity ",
+        "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE customer_id = ",
+        str(customer_id),
+        ") AS carts INNER JOIN `products_carts` AS cart_item ON carts.cart_id = cart_item.cart_id ",
+        "INNER JOIN `products` ON products.product_id = cart_item.product_id;"])
+        result = execute_query(db_connection, query).fetchall()
+        print(result)
+        carts = set()
+        for item in result:
+            carts.add(item[0])
+        return render_template("cart.html", carts=carts, cartitems=result)
+    elif request.method == 'POST':
+        pass
 
 @app.route("/order")
 def order():
