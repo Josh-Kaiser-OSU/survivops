@@ -46,17 +46,32 @@ def product(product_id):
         # Get all info for the product with the given product_id
         product_query = 'SELECT * FROM `products` WHERE product_id = %s;' % (product_id)
         product_result = execute_query(db_connection, product_query).fetchone()
-        print("product_result is:", product_result)  # todo: remove
         if product_result == None:
             return "A product with id " + str(product_id) + " cannot be found."
 
         # Get all carts from the database
         carts_query = 'SELECT * FROM `carts`;'
         carts_result = execute_query(db_connection, carts_query).fetchall()
-        print("carts_result is:", carts_result)  # todo: remove
-        
         return render_template("product.html", product=product_result, carts=carts_result)
+
     elif request.method == 'POST':
+        product_qty_query = 'SELECT quantity_available FROM `products` WHERE product_id = %s;' % (product_id)
+        product_qty_result = execute_query(db_connection, product_qty_query).fetchone()[0]
+        qty_to_order = int(request.form['quantity-to-order'])
+        qty_remaining = product_qty_result - qty_to_order
+        cart_id = int(request.form['carts'])
+
+        # Update the quantity_available attribute of the product
+        update_qty_avail_query = 'UPDATE products \
+                                  SET quantity_available = %s \
+                                  WHERE product_id = %s;' % (qty_remaining, product_id)
+        update_qty_avail_result = execute_query(db_connection, update_qty_avail_query).fetchall()
+
+        # Add the product to the cart
+        add_prod_to_cart_query = 'REPLACE INTO products_carts (cart_id, product_id, product_quantity) \
+                                  VALUES (%s, %s, %s);' % (cart_id, product_id, qty_to_order)
+        add_prod_to_cart_result = execute_query(db_connection, add_prod_to_cart_query).fetchall()
+
         return redirect(url_for('cart'))
 
 @app.route("/cart")
