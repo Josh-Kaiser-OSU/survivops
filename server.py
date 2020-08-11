@@ -73,8 +73,10 @@ def product(product_id = 1):
                                   VALUES (%s, %s, %s);' % (cart_id, product_id, qty_to_order)
         add_prod_to_cart_result = execute_query(db_connection, add_prod_to_cart_query).fetchall()
 
-        return redirect(url_for('cart/2'))
-
+        # Get the customer ID associated with the selected cart
+        get_cust_id_query = 'SELECT customer_id FROM `carts` WHERE cart_id = %s;' % (cart_id)
+        get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()[0]
+        return redirect(url_for('cart') + str(get_cust_id_result))
 
 @app.route('/cart/')
 @app.route('/cart/<int:customer_id>', methods=['GET', 'POST'])
