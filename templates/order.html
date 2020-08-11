@@ -131,61 +131,20 @@
             </div>
             <table class="table" id="review-items-table">
               <tbody>
+                {% for product in cart_products %}
                 <tr>
                   <td>
-                    <img src="images/100x100-placeholder.png" alt="Image">
+                    <!-- <img src="images/100x100-placeholder.png" alt="Image"> -->
+                    {{ product[0] }}
                   </td>
                   <td>
-                    <p>Product 1 Name</p>
-                    <p>Vendor</p>
-                    <p>Price</p>
-                    <p>Quantity</p>    
+                    <p><strong>{{ product[1] }}</strong></p>
+                    <p>Vendor: {{ product[2] }}</p>
+                    <p>${{ product[3] }}</p>
+                    <p>Qty: {{ product[4] }}</p>    
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <img src="images/100x100-placeholder.png" alt="Image">
-                  </td>
-                  <td>
-                    <p>Product 2 Name</p>
-                    <p>Vendor</p>
-                    <p>Price</p>
-                    <p>Quantity</p>    
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="images/100x100-placeholder.png" alt="Image">
-                  </td>
-                  <td>
-                    <p>Product 3 Name</p>
-                    <p>Vendor</p>
-                    <p>Price</p>
-                    <p>Quantity</p>    
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="images/100x100-placeholder.png" alt="Image">
-                  </td>
-                  <td>
-                    <p>Product 4 Name</p>
-                    <p>Vendor</p>
-                    <p>Price</p>
-                    <p>Quantity</p>    
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="images/100x100-placeholder.png" alt="Image">
-                  </td>
-                  <td>
-                    <p>Product 5 Name</p>
-                    <p>Vendor</p>
-                    <p>Price</p>
-                    <p>Quantity</p>    
-                  </td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
