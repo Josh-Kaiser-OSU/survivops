@@ -16,6 +16,20 @@
         <div class="container" id="shipping-details-outer">
           <div id="shipping-details-inner">
             <div class="row">
+              <h2>Delivery Options</h2>
+              <div class="col-12">
+                <div class="row">
+                  <input type="radio" id="pick-up" name="delivery-option" value="pick-up">
+                  <label for="pick-up" id="pick-up-label">Pick up from store (500 Rugged Road, Survivalville, Alaska)</label>
+                </div>
+                <div class="row">
+                  <input type="radio" id="ship" name="delivery-option" value="ship">
+                  <label for="ship" id="ship-label">Ship</label>
+                </div>
+                <hr>
+              </div>
+            </div>
+            <div class="row">
               <h2>Ship to</h2>
             </div>
             <div class="row">
@@ -47,13 +61,6 @@
                 <label for="shipping-zip">ZIP code</label><br>
                 <input type="text" id="shipping-zip" name="shipping-zip" required>
               </span>
-            </div>
-            <div class="row" id="or-word">or</div>
-            <div class="row">
-              <div>
-                <input type="checkbox" id="pick-up" name="pick-up" value="pick-up-checked">
-                <label for="pick-up" id="pick-up-label">Pick up from store (500 Rugged Road, Survivalville, Alaska)</label>
-              </div>
             </div>
           </div>
         </div>
@@ -114,7 +121,7 @@
             <div class="row">
               <span>
                 <label for="phone-number">Phone number</label><br>
-                <input type="text" id="phone-number" name="phone-number" required>
+                <input type="tel" id="phone-number" name="phone-number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
               </span>
               <span>
                 <label for="email-address">Email address</label><br>
