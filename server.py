@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from db_connector.db_connector import connect_to_database, execute_query
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -172,8 +173,6 @@ def order(cart_id = 1):
         cust_id = get_cust_id_result
 
         # Get all the data from the form
-        print("request.form is:", request.form)
-
         billing_street = str(request.form['billing-street'])
         billing_city = str(request.form['billing-city'])
         billing_state = str(request.form['billing-state'])
@@ -183,20 +182,20 @@ def order(cart_id = 1):
         shipping_state = str(request.form['shipping-state'])
         shipping_zip = str(request.form['shipping-zip'])
         shipped = False
-        pickup = str(request.form['pick-up'])
-        if pickup == 'pick-up-checked':
+        delivery_option = str(request.form['delivery-option'])
+        if delivery_option == 'pick-up':
             pickup_or_ship = True
         else:
             pickup_or_ship = False
         has_paid = True
         delivered = False
-        print("Before create_order_query")  # todo: remove
-
+        # Get the current date and time, courtesy of https://www.programiz.com/python-programming/datetime/current-datetime
+        order_date = str(datetime.now())[:19]
         # Insert a new row into the orders table
         create_order_query = 'INSERT INTO `orders`(customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date) \
-                              VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW());' % (cust_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered)
-        create_order_result = execute_query(db_connection, create_order_query).fetchall()
-
+                              VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'
+        order_data = (cust_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date)
+        execute_query(db_connection, create_order_query, order_data)
         return redirect(url_for('home'))
 
 @app.route("/account")
