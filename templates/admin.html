@@ -107,42 +107,20 @@
         </tr>
       </thead>
       <tbody>
+      {% for product in products %}
         <tr>
-          <td>Swift-1000 Kayak</td>
-          <td>Activity-Gear</td>
-          <td>Best Kayaks Co.</td>
-          <td>$300.00</td>
-          <td>6</td>
-          <td><img src="images/100x100-placeholder.png"></td>
+          <td>{{ product[1] }}</td>
+          <td>{{ product[2] }}</td>
+          <td>{{ product[3] }}</td>
+          <td>{{ product[4] }}</td>
+          <td>{{ product[6] }}</td>
+          <td>{{ product[5] }}</td>
           <td>
             <button type="button" class="update-btn">Update</button>
             <button type="button" class="delete-btn">Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>Snuggle-4000 Sleeping Bag</td>
-          <td>Sleeping</td>
-          <td>Best Sleeping Bags Co.</td>
-          <td>$40.00</td>
-          <td>18</td>
-          <td><img src="images/100x100-placeholder.png"></td>
-          <td>
-            <button type="button" class="update-btn">Update</button>
-            <button type="button" class="delete-btn">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Scrumptious-2000 Spork</td>
-          <td>Eating</td>
-          <td>Best Sporks Co.</td>
-          <td>$7.00</td>
-          <td>43</td>
-          <td><img src="images/100x100-placeholder.png"></td>
-          <td>
-            <button type="button" class="update-btn">Update</button>
-            <button type="button" class="delete-btn">Delete</button>
-          </td>
-        </tr>
+      {% endfor %}
       </tbody>
     </table>    
   </div>

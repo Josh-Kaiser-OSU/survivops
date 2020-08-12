@@ -249,11 +249,14 @@ def admin():
     db_connection = connect_to_database()
     if request.method == 'GET':
         # Fill out the "Customer List" card on the page
-        # Get all customers from in the database
+        # Get all customers from the database
         get_all_cust_query = 'SELECT * FROM `customers`;'
         get_all_cust_result = execute_query(db_connection, get_all_cust_query).fetchall()
-        print("get_all_cust_result:", get_all_cust_result)  # todo: remove
-        return render_template("admin.html", customers=get_all_cust_result)
+
+        # Get all products from the database
+        get_all_prod_query = 'SELECT * FROM `products`;'
+        get_all_prod_result = execute_query(db_connection, get_all_prod_query).fetchall()
+        return render_template("admin.html", customers=get_all_cust_result, products=get_all_prod_result)
 
     elif request.method == 'POST':
         return "/admin POST request sent."
