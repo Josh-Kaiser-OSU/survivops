@@ -145,7 +145,7 @@ def cart(customer_id=1):
             result = execute_query(db_connection, query).fetchall()
         return redirect('cart/' + str(customer_id))
 
-@app.route('/order/')
+@app.route('/order/', methods=['GET', 'POST'])
 @app.route('/order/<int:cart_id>', methods=['GET', 'POST'])
 def order(cart_id = 1):
     db_connection = connect_to_database()
@@ -160,7 +160,44 @@ def order(cart_id = 1):
         if prod_in_cart_result == None:
             return "The cart with id " + str(cart_id) + " has no products."
         
-        return render_template('order.html', cart_products=prod_in_cart_result)
+        return render_template('order.html', cart_products=prod_in_cart_result, cart_id=cart_id)
+
+    if request.method == 'POST':
+        # Get the customer's ID
+        get_cust_id_query = 'SELECT CU.customer_id \
+                             FROM `customers` CU \
+                             INNER JOIN `carts` CA ON CA.customer_id = CU.customer_id \
+                             WHERE cart_id = %s;' % (cart_id)
+        get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()[0]
+        cust_id = get_cust_id_result
+
+        # Get all the data from the form
+        print("request.form is:", request.form)
+
+        billing_street = str(request.form['billing-street'])
+        billing_city = str(request.form['billing-city'])
+        billing_state = str(request.form['billing-state'])
+        billing_zip = str(request.form['billing-zip'])
+        shipping_street = str(request.form['shipping-street'])
+        shipping_city = str(request.form['shipping-city'])
+        shipping_state = str(request.form['shipping-state'])
+        shipping_zip = str(request.form['shipping-zip'])
+        shipped = False
+        pickup = str(request.form['pick-up'])
+        if pickup == 'pick-up-checked':
+            pickup_or_ship = True
+        else:
+            pickup_or_ship = False
+        has_paid = True
+        delivered = False
+        print("Before create_order_query")  # todo: remove
+
+        # Insert a new row into the orders table
+        create_order_query = 'INSERT INTO `orders`(customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date) \
+                              VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW());' % (cust_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered)
+        create_order_result = execute_query(db_connection, create_order_query).fetchall()
+
+        return redirect(url_for('home'))
 
 @app.route("/account")
 def account():
