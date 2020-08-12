@@ -7,7 +7,7 @@
 {% block content %}
 <h1>Checkout</h1>
 
-<form action="" method="post">
+<form action="/order/{{ cart_id }}" method="POST">
   <div class="container">
     <div class="row">
       <!-- Left side of the page -->
@@ -51,7 +51,7 @@
             <div class="row" id="or-word">or</div>
             <div class="row">
               <div>
-                <input type="checkbox" id="pick-up" name="pick-up">
+                <input type="checkbox" id="pick-up" name="pick-up" value="pick-up-checked">
                 <label for="pick-up" id="pick-up-label">Pick up from store (500 Rugged Road, Survivalville, Alaska)</label>
               </div>
             </div>
