@@ -157,11 +157,11 @@ def order(cart_id = 1):
                               INNER JOIN `products` P ON PC.product_id = P.product_id \
                               WHERE cart_id = %s;' % (cart_id)
         prod_in_cart_result = execute_query(db_connection, prod_in_cart_query).fetchall()
-        print("prod_in_cart_result is:", prod_in_cart_result)  # todo: remove
-        if prod_in_cart_result == None:
+        # Only render the order template if there are products in the cart
+        if prod_in_cart_result:
+            return render_template('order.html', cart_products=prod_in_cart_result, cart_id=cart_id)
+        else:
             return "The cart with id " + str(cart_id) + " has no products."
-        
-        return render_template('order.html', cart_products=prod_in_cart_result, cart_id=cart_id)
 
     if request.method == 'POST':
         # Get the customer's ID
