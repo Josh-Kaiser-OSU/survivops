@@ -157,7 +157,7 @@ def order(cart_id = 1):
                               INNER JOIN `products` P ON PC.product_id = P.product_id \
                               WHERE cart_id = %s;' % (cart_id)
         prod_in_cart_result = execute_query(db_connection, prod_in_cart_query).fetchall()
-        
+
         # Only render the order template if there are products in the cart
         if prod_in_cart_result:
             return render_template('order.html', cart_products=prod_in_cart_result, cart_id=cart_id)
@@ -244,9 +244,19 @@ def account():
 def contact():
     return render_template("contact.html")
 
-@app.route("/admin")
+@app.route("/admin", methods=['GET', 'POST'])
 def admin():
-    return render_template("admin.html")
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        # Fill out the "Customer List" card on the page
+        # Get all customers from in the database
+        get_all_cust_query = 'SELECT * FROM `customers`;'
+        get_all_cust_result = execute_query(db_connection, get_all_cust_query).fetchall()
+        print("get_all_cust_result:", get_all_cust_result)  # todo: remove
+        return render_template("admin.html", customers=get_all_cust_result)
+
+    elif request.method == 'POST':
+        return "/admin POST request sent."
 
 if __name__ == "__main__":
     app.run(debug=True)

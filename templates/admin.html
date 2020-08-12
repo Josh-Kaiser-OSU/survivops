@@ -21,34 +21,15 @@
         </tr>
       </thead>
       <tbody>
+      {% for customer in customers %}
         <tr>
-          <td>Bobby</td>
-          <td>Vasquez</td>
-          <td>BobbyBVasquez@teleworm.us</td>
-          <td>aeChai3ei</td>
-          <td>617-977-2777</td>
+          <td>{{ customer[1] }}</td>
+          <td>{{ customer[2] }}</td>
+          <td>{{ customer[3] }}</td>
+          <td>{{ customer[4] }}</td>
+          <td>{{ customer[5] }}</td>
         </tr>
-        <tr>
-          <td>Tammie</td>
-          <td>Becher</td>
-          <td>TammieMBecher@jourrapide.com</td>
-          <td>Ua6owoh8</td>
-          <td>276-356-3187</td>
-        </tr>
-        <tr>
-          <td>Alma</td>
-          <td>Cardenas</td>
-          <td>AlmaRCardenas@dayrep.com</td>
-          <td>WohTh8yah4</td>
-          <td>740-340-2367</td>
-        </tr>
-        <tr>
-          <td>Blossom</td>
-          <td>Sierra</td>
-          <td>BlossomBSierra@jourrapide.com</td>
-          <td>eiFoo1ahCh</td>
-          <td>785-960-2683</td>
-        </tr>
+      {% endfor %}
       </tbody>
     </table>
   </div>
