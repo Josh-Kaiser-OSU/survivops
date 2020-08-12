@@ -16,11 +16,11 @@ label {
   margin-bottom: 20px;
 }
 
-#or-word {
-  padding: 10px 0px;
+#pick-up, #ship {
+  margin-right: 0.5em;
 }
 
-#pick-up-label {
+#pick-up-label, #ship-label {
   font-weight: normal;
 }
 
