@@ -157,6 +157,7 @@ def order(cart_id = 1):
                               INNER JOIN `products` P ON PC.product_id = P.product_id \
                               WHERE cart_id = %s;' % (cart_id)
         prod_in_cart_result = execute_query(db_connection, prod_in_cart_query).fetchall()
+        
         # Only render the order template if there are products in the cart
         if prod_in_cart_result:
             return render_template('order.html', cart_products=prod_in_cart_result, cart_id=cart_id)
@@ -196,6 +197,27 @@ def order(cart_id = 1):
                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'
         order_data = (cust_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date)
         execute_query(db_connection, create_order_query, order_data)
+
+        # Gather data to insert into the products_orders table
+        # Get the last order_id from the orders table, courtesy of https://www.tutorialspoint.com/get-last-entry-in-a-mysql-table
+        get_last_order_id_query = 'SELECT order_id FROM `orders` ORDER BY order_id DESC LIMIT 1;'
+        get_last_order_id_result = execute_query(db_connection, get_last_order_id_query).fetchone()[0]
+        order_id = get_last_order_id_result
+
+        # Get all product_id and product_quantity values from the products_carts table
+        get_prod_id_qty_query = 'SELECT PC.product_id, PC.product_quantity \
+                                 FROM `products_carts` PC \
+                                 INNER JOIN `carts` C ON C.cart_id = PC.cart_id \
+                                 WHERE C.cart_id = %s;' % (cart_id)
+        get_prod_id_qty_result = execute_query(db_connection, get_prod_id_qty_query).fetchall()
+
+        # Use each (product_id, product_quantity) tuple in adding a new row to the products_orders table
+        for tup in get_prod_id_qty_result:
+            insert_products_orders_query = 'INSERT INTO `products_orders`(order_id, product_id, product_quantity) \
+                                            VALUES (%s, %s, %s);'
+            products_orders_data = (order_id, tup[0], tup[1])
+            execute_query(db_connection, insert_products_orders_query, products_orders_data)
+
         return redirect(url_for('home'))
 
 @app.route("/account")
