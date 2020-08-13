@@ -244,7 +244,7 @@ def account():
 def contact():
     return render_template("contact.html")
 
-@app.route("/admin", methods=['GET', 'POST'])
+@app.route("/admin/", methods=['GET', 'POST'])
 def admin():
     db_connection = connect_to_database()
     if request.method == 'GET':
@@ -260,6 +260,17 @@ def admin():
 
     elif request.method == 'POST':
         return "/admin POST request sent."
+
+# Handle listing a customer's orders based on the customer ID submitted on the admin page
+@app.route("/admin/show-orders/", methods=['GET', 'POST'])
+def admin_show_orders():
+    db_connection = connect_to_database()
+    # Get all orders for the given customer_id
+    cust_id = str(request.form['customer-id'])
+    get_all_ord_query = 'SELECT * FROM `orders` WHERE customer_id = %s;' % (cust_id)
+    get_all_ord_result = execute_query(db_connection, get_all_ord_query).fetchall()
+    return render_template("admin-show-orders.html", orders=get_all_ord_result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
