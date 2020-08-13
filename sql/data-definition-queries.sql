@@ -67,7 +67,7 @@ CREATE TABLE `products` (
    `category` VARCHAR(1000) not NULL,
    `vendor` VARCHAR(1000) not NULL,
    `price` DECIMAL(18,2) not NULL,
-   `image` BLOB,  -- Will be not NULL later
+   `image` VARCHAR(255),  -- Will be not NULL later
    `quantity_available` INT(255) not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
