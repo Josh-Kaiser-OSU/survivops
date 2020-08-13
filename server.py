@@ -4,30 +4,36 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
-        print("Fetching and rendering products web page")
+        # Get all products from db
         db_connection = connect_to_database()
-        query = "SELECT product_id, product_name, category, vendor, price, image, quantity_available FROM `products`;"
+        query = "SELECT product_id, product_name, category, vendor, price\
+        , image, quantity_available FROM `products`;"
         result = execute_query(db_connection, query).fetchall()
         
-        # Get all the categories
+        # Get all the categories from db
         query = "SELECT category FROM `products`;"
         category_result = execute_query(db_connection, query).fetchall()
         categories = set()
         for r in category_result:
             categories.add(r[0])
 
+        # Render the page
         return render_template("index.html", rows=result, categories=categories, filters=['',''])
+
     elif request.method == 'POST':
+        # Get all the filters from the form
         try:
             category = request.form['category']
         except KeyError:
             category = ''
         min_price = request.form['min-price']
         max_price = request.form['max-price']
-        print(category, min_price, max_price)
+
+        # Build the query from the user-entered filters and query db
         db_connection = connect_to_database()
         constraints = "WHERE 1"
         if min_price != "":
@@ -36,7 +42,8 @@ def home():
             constraints += " and price < " + str(max_price)
         if category != "":
             constraints += ' and category="' + str(category) + '"'
-        query = "SELECT product_id, product_name, category, vendor, price, image, quantity_available FROM `products`" + constraints + ";"
+        query = "SELECT product_id, product_name, category, vendor, price, image, \
+        quantity_available FROM `products`" + constraints + ";"
         result = execute_query(db_connection, query).fetchall()
 
         # Get all the categories
@@ -46,7 +53,9 @@ def home():
         for r in category_result:
             categories.add(r[0])
         
+        # Render the page with the filtered data.
         return render_template("index.html", rows=result, categories=categories, filters=[min_price, max_price])
+
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -69,6 +78,7 @@ def signin():
 
     if request.method == 'GET':
         return render_template("signin.html")
+
 
 @app.route('/product/')
 @app.route('/product/<int:product_id>', methods=['GET', 'POST'])
@@ -111,6 +121,7 @@ def product(product_id = 1):
             get_cust_id_result = 0
         return redirect(url_for('cart') + str(get_cust_id_result))
 
+
 @app.route('/cart/')
 @app.route('/cart/<int:customer_id>/', methods=['GET', 'POST'])
 @app.route('/cart/<int:customer_id>/<int:cart_id>', methods=['GET', 'POST'])
@@ -120,6 +131,7 @@ def cart(customer_id=0, cart_id=0):
         customer = "customer_id IS NULL"
     else:
         customer = "customer_id=" + str(customer_id)
+
     if request.method == 'GET':
         # Get all carts associated with the customer
         query = "SELECT cart_name, cart_id FROM `carts` WHERE " + customer + ';'
@@ -127,56 +139,64 @@ def cart(customer_id=0, cart_id=0):
         carts = []
         for item in cart_result:
             carts.append([item[0], item[1]])
+
+        # If the cart_id is not specified by the user, the first cart in the cart list will be displayed
         if cart_id == 0 and carts:
             cart_id = carts[0][1]
-        query = ''.join(["SELECT products.product_id, carts.cart_id, carts.cart_name AS cart_name, products.product_name AS product_name, ",
+
+        # Get all items in the specified cart
+        query = ''.join(["SELECT products.product_id, carts.cart_id, \
+        carts.cart_name AS cart_name, products.product_name AS product_name, ",
         "products.price AS price, cart_item.product_quantity AS quantity ",
         "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE ",
         customer,
-        ") AS carts INNER JOIN `products_carts` AS cart_item ON carts.cart_id = cart_item.cart_id ",
+        ") AS carts INNER JOIN `products_carts` AS cart_item ON carts.cart_id = \
+        cart_item.cart_id ",
         "INNER JOIN `products` ON products.product_id = cart_item.product_id ",
         "WHERE carts.cart_id=" + str(cart_id) + ";"])
         result = execute_query(db_connection, query).fetchall()
 
-        
-        print('carts: ', carts)
-        print('cart_items: ', result)
+        # Render the page
         return render_template("cart.html", carts=carts, cart_id=cart_id, cartitems=result, customer_id=customer_id)
+
     elif request.method == 'POST':
-        print("******************** IN POST!!!!!!! ********************")
+        # Get form data
         cmd = request.form['cmd']
         cart_id = request.form['cart_id']
         product_id = request.form['product_id']
         qty = request.form['quantity']
 
         if cmd == "Update":
-            print("******************** UPDATING A PRODUCT!!!!!!! ********************")
-            query = "UPDATE `products_carts` SET product_quantity=" + str(qty) + " WHERE cart_id=" + str(cart_id) + " AND product_id=" + str(product_id) + ";"
+            # Updates the quantity of a particular product in the cart
+            query = "UPDATE `products_carts` SET product_quantity=\
+            " + str(qty) + " WHERE cart_id=" + str(cart_id) + " AND \
+            product_id=" + str(product_id) + ";"
             result = execute_query(db_connection, query).fetchall()
         elif cmd == "Remove":
-            print("******************** DELETING A PRODUCT!!!!!!! ********************")
             # Delete product from cart
-            query = "DELETE FROM `products_carts` WHERE cart_id = " + str(cart_id) + " AND product_id = " + str(product_id) + ";"
+            query = "DELETE FROM `products_carts` WHERE cart_id = \
+            " + str(cart_id) + " AND product_id = " + str(product_id) + ";"
             result = execute_query(db_connection, query).fetchall()
         elif cmd == "new_cart":
-            print("******************** NEW CART!!!!!!! ********************")
+            # Create a new cart with a user-defined name
             cart_name = request.form['new_cart_name']
             if customer_id == 0:
                 customer = "NULL"
             else:
                 customer = customer_id
-            query = "INSERT INTO `carts` (customer_id, cart_name) VALUES (" + str(customer) + ', "' + str(cart_name) + '");'
+            query = "INSERT INTO `carts` (customer_id, cart_name) VALUES (\
+            " + str(customer) + ', "' + str(cart_name) + '");'
             result = execute_query(db_connection, query).fetchall()
         elif cmd == "make_public":
-            print("******************** MAKING PUBLIC!!!!!!! ********************")
-            # Make customer_id = Null
+            # Make a cart public by setting customer_id = Null
             query = "UPDATE `carts` SET customer_id=NULL WHERE cart_id=" + str(cart_id) + ";"
             result = execute_query(db_connection, query).fetchall()
         elif cmd == "delete_cart":
-            print("******************** DELETING A CART!!!!!!! ********************")
+            # Delete a cart (cascades to delete the products in products_carts too)
             query = "DELETE FROM `carts` WHERE cart_id=" + str(cart_id) + ";"
             result = execute_query(db_connection, query).fetchall()
         return redirect('cart/' + str(customer_id))
+
 
 @app.route('/order/', methods=['GET', 'POST'])
 @app.route('/order/<int:cart_id>', methods=['GET', 'POST'])
@@ -253,11 +273,13 @@ def order(cart_id = 1):
 
         return redirect(url_for('home'))
 
+
 @app.route("/account/")
 @app.route("/account/<int:customer_id>", methods=['GET', 'POST'])
 def account(customer_id=0):
     db_connection = connect_to_database()
     if request.method == 'GET':
+        # Get all customer ids to check if user-entered cutomer_id is valid
         query = "SELECT customer_id FROM `customers`;"
         customer_id_result = execute_query(db_connection, query).fetchall()
         id_set = set()
@@ -311,6 +333,7 @@ def account(customer_id=0):
 def contact():
     return render_template("contact.html")
 
+
 @app.route("/admin/")
 def admin():
     db_connection = connect_to_database()
@@ -324,6 +347,7 @@ def admin():
     get_all_prod_result = execute_query(db_connection, get_all_prod_query).fetchall()
     return render_template("admin.html", customers=get_all_cust_result, products=get_all_prod_result)
 
+
 # Handle listing a customer's orders based on the customer ID submitted on the admin page
 @app.route("/admin/show-orders/", methods=['GET', 'POST'])
 def admin_show_orders():
@@ -333,6 +357,7 @@ def admin_show_orders():
     get_all_ord_query = 'SELECT * FROM `orders` WHERE customer_id = %s;' % (cust_id)
     get_all_ord_result = execute_query(db_connection, get_all_ord_query).fetchall()
     return render_template("admin-show-orders.html", orders=get_all_ord_result)
+
 
 # Handle adding a new product to the database from the admin page
 @app.route("/admin/add-product/", methods=['GET', 'POST'])
@@ -354,6 +379,7 @@ def admin_add_product():
         execute_query(db_connection, add_new_prod_query, prod_data)
 
         return redirect(url_for('admin'))  # Redirect user back to the admin page
+
 
 # Handle updating a product that exists in the database
 @app.route('/admin/update-product/<int:product_id>/', methods=['GET', 'POST'])
