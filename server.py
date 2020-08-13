@@ -328,10 +328,27 @@ def admin_show_orders():
     get_all_ord_result = execute_query(db_connection, get_all_ord_query).fetchall()
     return render_template("admin-show-orders.html", orders=get_all_ord_result)
 
+# Handle adding a new product to the database from the admin page
 @app.route("/admin/add-product/", methods=['GET', 'POST'])
 def admin_add_product():
+    db_connection = connect_to_database()
     if request.method == 'POST':
-        return "In /admin/add-product/ POST handler."
+        # Get data from the form
+        product_name = request.form['new-product-name']
+        category = request.form['new-category']
+        vendor = request.form['new-vendor']
+        price = request.form['new-price']
+        qty_available = request.form['new-qty-available']
+        image = request.form['new-image']
+
+        # Create and execute query to insert a new row into the products table
+        add_new_prod_query = 'REPLACE INTO `products` (product_name, category, vendor, price, quantity_available, image) \
+                              VALUES (%s, %s, %s, %s, %s, %s);'
+        prod_data = (product_name, category, vendor, price, qty_available, image)  # Gather form data
+        execute_query(db_connection, add_new_prod_query, prod_data)
+
+        return redirect(url_for('admin'))  # Redirect user back to the admin page
+
 
 if __name__ == "__main__":
     app.run(debug=True)
