@@ -409,5 +409,17 @@ def admin_update_product(product_id):
         return redirect(url_for('admin'))
 
 
+@app.route('/admin/delete-product/<int:product_id>/', methods=['GET', 'POST'])
+def admin_delete_product(product_id):
+    '''Delete the specified row from the products table'''
+    db_connection = connect_to_database()
+    if request.method == 'POST':
+        # Create and execute a query to delete the product
+        del_prod_query = 'DELETE FROM `products` WHERE product_id = %s;'
+        data = (product_id,)
+        del_prod_result = execute_query(db_connection, del_prod_query, data)
+        return redirect(url_for('admin'))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
