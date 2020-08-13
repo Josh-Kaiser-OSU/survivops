@@ -60,24 +60,27 @@ def home():
 @app.route('/signin/', methods=['GET', 'POST'])
 def signin():
     '''Allow the user to sign in or register as a new customer.'''
+    # Handle customer registration
     if request.method == 'POST':
         db_connection = connect_to_database()
 
-        # Gather all customer data
+        # Gather all user data
         fname = request.form['sign-up-fname-field']
         lname = request.form['sign-up-lname-field']
         email = request.form['sign-up-email-field']
         password = request.form['sign-up-password-field']
         phone = request.form['sign-up-phone-number-field']
 
+        # Create and execute query to add a new customer to the database
         query = 'INSERT INTO `customers` (fname, lname, email, password, phone_number) \
                  VALUES (%s, %s, %s, %s, %s);'
         customer_data = (fname, lname, email, password, phone)
         execute_query(db_connection, query, customer_data)
 
+        # Redirect the user to the home page after registering
         return redirect(url_for('home'))
 
-    if request.method == 'GET':
+    elif request.method == 'GET':
         return render_template("signin.html")
 
 
