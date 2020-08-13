@@ -6,6 +6,11 @@
 
 {% block content %}
 <div class="content">
+    {% if info==[] %}
+    <h2>No account found</h2>
+    <p>The url needs to be /account/account_number</p>
+    <p>To view the account numbers for each customer visit the <a href="/admin">admin page</a>.</p>
+    {% else %}
     <!-- Update/Change Orders -->
     <h2>Order History</h2>
     <table>
@@ -46,6 +51,7 @@
 
     <!-- Delete Account button -->
     <button id="delete-account-button" class="btn btn-danger">Delete Account</button>
+    {% endif %}
 </div>
 {% endblock %}
 

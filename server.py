@@ -253,16 +253,25 @@ def order(cart_id = 1):
 
         return redirect(url_for('home'))
 
-@app.route("/account")
-def account():
+@app.route("/account/")
+@app.route("/account/<int:customer_id>")
+def account(customer_id=0):
     # Will get customer_id based on user input later
-    customer_id = 2
     db_connection = connect_to_database()
+
+    query = "SELECT customer_id FROM `customers`;"
+    customer_id_result = execute_query(db_connection, query).fetchall()
+    id_set = set()
+    for num in customer_id_result:
+        id_set.add(num[0])
+    if customer_id not in id_set:
+        return render_template("account.html", info=[], orders=[])
+
     query = ''.join(["SELECT customer_id, fname, lname, email, password, phone_number ",
     "FROM `customers` WHERE customer_id=",
     str(customer_id), ";"])
     result = execute_query(db_connection, query).fetchall()
-    print(result)
+
     query = ''.join([
         "SELECT order_id, billing_street, billing_city, billing_state, billing_zip, ",
         "shipping_street, shipping_city, shipping_state, shipping_zip, shipped, ",
