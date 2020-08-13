@@ -26,7 +26,6 @@
         <tr>
             <td>{{order[0]}}</td>
             <td>{{order[5]}} {{order[6]}}, {{order[7]}} {{order[8]}}</td>
-            <!-- order[10] is shipped-->
             {% if order[12]==1 %}
             <td>Delivered</td>
             {% elif order[9]==1%}
@@ -53,11 +52,11 @@
 
     <!-- Update Account Details-->
     <h3>Update Account</h3>
-    <form action="#">
-        <label for="">Update Email<br><input type="email" value="{{info[0][3]}}"></label><br>
-        <label for="">Change password<br><input type="text" value="{{info[0][4]}}"></label><br>
+    <form action="/account/{{info[0][0]}}" method="POST">
+        <label for="">Update Email<br><input type="email" name="email" value="{{info[0][3]}}"></label><br>
+        <label for="">Change password<br><input type="text" name="password" value="{{info[0][4]}}"></label><br>
         <label for="">Repeat password<br><input type="text" value="{{info[0][4]}}"></label><br>
-        <label for="">Change phone number<br><input type="text" value="{{info[0][5]}}"></label><br>
+        <label for="">Change phone number<br><input type="text" name="phone_number" value="{{info[0][5]}}"></label><br>
         <button class="btn btn-primary" type="submit">Save Changes</button>
     </form>
 
