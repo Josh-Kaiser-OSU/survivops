@@ -256,9 +256,8 @@ def order(cart_id = 1):
 @app.route("/account/")
 @app.route("/account/<int:customer_id>", methods=['GET', 'POST'])
 def account(customer_id=0):
+    db_connection = connect_to_database()
     if request.method == 'GET':
-        db_connection = connect_to_database()
-
         query = "SELECT customer_id FROM `customers`;"
         customer_id_result = execute_query(db_connection, query).fetchall()
         id_set = set()
@@ -299,7 +298,14 @@ def account(customer_id=0):
     
     elif request.method == 'POST':
         # Update account info
-        pass
+        email = request.form['email']
+        password = request.form['password']
+        phone_number = request.form['phone_number']
+        query = ''.join(["UPDATE `customers` SET email=" , '"' + str(email) + '"' + ", password=" + '"', str(password),
+        '"' + ", phone_number=" + '"' + str(phone_number)+ '"' + " WHERE customer_id=" + str(customer_id) + ";"])
+        result = execute_query(db_connection, query).fetchall()
+        return redirect('/account/' + str(customer_id))
+
 
 @app.route("/contact")
 def contact():
