@@ -1,0 +1,105 @@
+{% extends "layouts/main.html" %}
+
+{% block css_file %}
+{{ url_for('static', filename='styles/admin.css') }}
+{% endblock %}
+
+{% block content %}
+<h1>Administrator Dashboard</h1>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">List customer orders</h2>
+    <h3 class="card-subtitle text-muted">Enter a customer's ID below to show all orders belonging to the customer.</h3>
+    <form action="/admin/show-orders/" method="POST">
+      <div class="form-group">
+        <label for="customer-id">Customer ID</label><br>
+        <input type="text" id="customer-id" name="customer-id" required>
+      </div>
+      <button type="submit" class="btn btn-primary" id="customer-search-btn">Search</button>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+  {% if orders %}
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer ID</th>
+          <th>Billing Address</th>
+          <th>Shipping Address</th>
+          <th>Shipped</th>
+          <th>Pickup or Ship</th>
+          <th>Has Paid</th>
+          <th>Delivered</th>
+          <th>Order Placed</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for order in orders %}
+        <tr>
+          <!-- Order ID -->
+          <td>{{ order[0] }}</td>
+
+          <!-- Customer ID -->
+          <td>{{ order[1] }}</td>
+
+          <!-- Billing Address -->
+          <td>{{ order[2] }} {{ order[3] }}, {{ order[4] }} {{ order[5] }}</td>
+
+          <!-- Shipping Address -->
+          <td>{{ order[6] }} {{ order[7] }}, {{ order[8] }} {{ order[9] }}</td>
+
+          <!-- Shipped -->
+          <td>
+          {% if order[10] == 0 %}
+            No
+          {% else %}
+            Yes
+          {% endif %}
+          </td>
+
+          <!-- Pickup or Ship -->
+          <td>
+          {% if order[11] == 1 %}
+            Pickup
+          {% elif order[11] == 0 %}
+            Ship
+          {% endif %}
+          </td>
+
+          <!-- Has Paid -->
+          <td>
+          {% if order[12] == 0 %}
+            No
+          {% else %}
+            Yes
+          {% endif %}
+          </td>
+
+          <!-- Delivered -->
+          <td>
+          {% if order[13] == 0 %}
+            No
+          {% else %}
+            Yes
+          {% endif %}
+          </td>
+
+          <!-- Order Placed -->
+          <td>{{ order[14] }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    No orders were found for the entered customer ID.
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block js_file %}
+{{ url_for('static', filename='js/admin.js') }}
+{% endblock %}
