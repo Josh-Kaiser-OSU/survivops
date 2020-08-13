@@ -91,8 +91,8 @@ CREATE TABLE `products_orders` (
    `product_id` INT(255) NOT NULL,
    `product_quantity` INT(255) NOT NULL,
    PRIMARY KEY (`order_id`, `product_id`),
-   FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-   FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+   FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

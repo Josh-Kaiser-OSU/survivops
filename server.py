@@ -57,8 +57,9 @@ def home():
         return render_template("index.html", rows=result, categories=categories, filters=[min_price, max_price])
 
 
-@app.route('/signin', methods=['GET', 'POST'])
+@app.route('/signin/', methods=['GET', 'POST'])
 def signin():
+    '''Allow the user to sign in or register as a new customer.'''
     if request.method == 'POST':
         db_connection = connect_to_database()
 
@@ -382,14 +383,43 @@ def admin_add_product():
 
 
 # Handle updating a product that exists in the database
-@app.route('/admin/update-product/<int:product_id>', methods=['GET', 'PUT'])
+@app.route('/admin/update-product/<int:product_id>/', methods=['GET', 'POST'])
 def admin_update_product(product_id):
     db_connection = connect_to_database()
+    # Get the existing product info and pass it into a template
     if request.method == 'GET':
         # Create and execute query to get all product info
         get_prod_info_query = 'SELECT * FROM `products` WHERE product_id = %s;' % (product_id)
         get_prod_info_result = execute_query(db_connection, get_prod_info_query).fetchone()
         return render_template('admin-update-product.html', product=get_prod_info_result)
+
+    # Update the product using the submitted form
+    if request.method == 'POST':
+        # Gather form data
+        product_name = request.form['product-name']
+        category = request.form['category']
+        vendor = request.form['vendor']
+        price = request.form['price']
+        qty_available = request.form['qty-available']
+        image = request.form['image']
+        # Create and execute query to update the product
+        update_prod_query = 'UPDATE `products` SET product_name = %s, category = %s, vendor = %s, price = %s, image = %s, quantity_available = %s \
+                             WHERE product_id = %s;'
+        data = (product_name, category, vendor, price, image, qty_available, product_id)
+        update_prod_result = execute_query(db_connection, update_prod_query, data)
+        return redirect(url_for('admin'))
+
+
+@app.route('/admin/delete-product/<int:product_id>/', methods=['GET', 'POST'])
+def admin_delete_product(product_id):
+    '''Delete the specified row from the products table'''
+    db_connection = connect_to_database()
+    if request.method == 'POST':
+        # Create and execute a query to delete the product
+        del_prod_query = 'DELETE FROM `products` WHERE product_id = %s;'
+        data = (product_id,)
+        del_prod_result = execute_query(db_connection, del_prod_query, data)
+        return redirect(url_for('admin'))
 
 
 if __name__ == "__main__":
