@@ -30,7 +30,7 @@ CREATE TABLE `customers` (
 DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts` (
    `cart_id` INT(255) AUTO_INCREMENT not NULL PRIMARY KEY,
-   `customer_id` INT(255) not NULL,
+   `customer_id` INT(255),
    `cart_name` VARCHAR(1000) not NULL,
    FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

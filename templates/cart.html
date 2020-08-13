@@ -8,17 +8,41 @@
 <div id="cart-items" class="container">
     <div class="row">
         <div class="list-group col-2" id="Carts">
-            <ul>
+            <ul id="cart_list">
                 <li class="list-group-item">Wishlists</h2>
                 {% for name in carts %}
-                <li class="list-group-item"><a href="#">{{name}}</a></li>
+                {% if customer_id == None %}
+                <li class="list-group-item"><a href="/cart/0/{{name[1]}}">{{name[0]}}</a></li>
+                {% else %}
+                <li class="list-group-item"><a href="/cart/{{customer_id}}/{{name[1]}}">{{name[0]}}</a></li>
+                {% endif %}
                 {% endfor %}
-                <li class="list-group-item"><button class="btn">NEW</button></li>
+                
+                <li class="list-group-item">
+                    <form action="/cart/{{customer_id}}/" method="POST">
+                    <input type="hidden" name="cart_id" value="{{cart_id}}">
+                    <input type="hidden" name="product_id" value="">
+                    <input type="hidden" name="quantity" value="0">
+                    <input id="new_cart_name" type="text" name="new_cart_name" placeholder="New Name">
+                    <button class="btn btn-primary" type="submit" name="cmd" value="new_cart">Add</button>
+                </form>
+                </li>
+                
             </ul>
         </div>
         <div class="col-10" id="product-grid">
-            <h2 id="cart-name">Cart</h2>
+            {% if not carts %}
+            <h3>No wishlists</h3>
+            {% elif cartitems and cartitems[0][2] %}
+            <h3>{{cartitems[0][2]}}</h3>
+            {% else %}
+            <h3>{{carts[0][0]}}</h3>
+            {% endif %}
+            
             <ul class="">
+                {% if not cartitems %}
+                <li>No items in cart</li>
+                {% endif %}
                 {% for item in cartitems %}
                 <li class="">
                     <a href="/product/{{item[0]}}">
@@ -26,18 +50,24 @@
                     </a>
                     <p>{{item[3]}}</p>
                     <p>${{item[4]}}</p>
-                    <form action='/cart/{{item[2]}}' method='POST'>
-                        <input type="hidden" name="product_id" value="{{item[1]}}">
-                        <input type="hidden" name="cart_id" value="{{item[2]}}">
-                        <label class="qty-label" for="">Quantity: <input id="cart-quantity-update" class="qty-input" name="quantity" type="number" value="{{item[6]}}"></label>
+                    <form action='/cart/{{customer_id}}/{{cart_id}}' method='POST'>
+                        <input type="hidden" name="product_id" value="{{item[0]}}">
+                        <input type="hidden" name="cart_id" value="{{item[1]}}">
+                        <label class="qty-label" for="">Quantity: <input class="qty-input" name="quantity" type="number" value="{{item[5]}}"></label>
                         <button type="submit" name="cmd" value="Update" class="btn btn-primary">Update</button>
                         <button type="submit" name="cmd" value="Remove" class="btn btn-danger">Remove</button>
                     </form>
                 </li>
                 {% endfor %}
             </ul>
-            <button class="btn btn-danger" type="">Delete Cart</button>
-            <button class="btn btn-primary" type="submit">Checkout</button>
+            <a href="/order/{{cart_id}}"><button class="btn btn-primary">Checkout</button></a><br>
+            <form action="/cart/{{customer_id}}/{{cart_id}}" method="POST">
+                <input type="hidden" name="cart_id" value="{{cart_id}}">
+                <input type="hidden" name="product_id" value="">
+                <input type="hidden" name="quantity" value="0">
+                <button class="btn btn-warning" type="submit" name="cmd" value="make_public">Make Public</button>
+                <button class="btn btn-danger" type="submit" name="cmd" value="delete_cart">Delete Cart</button>
+            </form>
         </div>
     </div>
 </div>

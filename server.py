@@ -107,42 +107,74 @@ def product(product_id = 1):
         # Get the customer ID associated with the selected cart
         get_cust_id_query = 'SELECT customer_id FROM `carts` WHERE cart_id = %s;' % (cart_id)
         get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()[0]
+        if get_cust_id_result == None:
+            get_cust_id_result = 0
         return redirect(url_for('cart') + str(get_cust_id_result))
 
 @app.route('/cart/')
-@app.route('/cart/<int:customer_id>', methods=['GET', 'POST'])
-def cart(customer_id=1):
+@app.route('/cart/<int:customer_id>/', methods=['GET', 'POST'])
+@app.route('/cart/<int:customer_id>/<int:cart_id>', methods=['GET', 'POST'])
+def cart(customer_id=0, cart_id=0):
     db_connection = connect_to_database()
+    if customer_id == 0:
+        customer = "customer_id IS NULL"
+    else:
+        customer = "customer_id=" + str(customer_id)
     if request.method == 'GET':
-        print("Fetching and rendering cart web page")
-        # Will get customer_id based on user input later
+        # Get all carts associated with the customer
+        query = "SELECT cart_name, cart_id FROM `carts` WHERE " + customer + ';'
+        cart_result = execute_query(db_connection, query).fetchall()
+        carts = []
+        for item in cart_result:
+            carts.append([item[0], item[1]])
+        if cart_id == 0 and carts:
+            cart_id = carts[0][1]
         query = ''.join(["SELECT products.product_id, carts.cart_id, carts.cart_name AS cart_name, products.product_name AS product_name, ",
         "products.price AS price, cart_item.product_quantity AS quantity ",
-        "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE customer_id = ",
-        str(customer_id),
+        "FROM (SELECT cart_id, customer_id, cart_name FROM `carts` WHERE ",
+        customer,
         ") AS carts INNER JOIN `products_carts` AS cart_item ON carts.cart_id = cart_item.cart_id ",
-        "INNER JOIN `products` ON products.product_id = cart_item.product_id;"])
+        "INNER JOIN `products` ON products.product_id = cart_item.product_id ",
+        "WHERE carts.cart_id=" + str(cart_id) + ";"])
         result = execute_query(db_connection, query).fetchall()
-        carts = set()
-        for item in result:
-            carts.add(item[2])
-        return render_template("cart.html", carts=carts, cartitems=result)
+
+        
+        print('carts: ', carts)
+        print('cart_items: ', result)
+        return render_template("cart.html", carts=carts, cart_id=cart_id, cartitems=result, customer_id=customer_id)
     elif request.method == 'POST':
+        print("******************** IN POST!!!!!!! ********************")
         cmd = request.form['cmd']
-        qty = request.form['quantity']
         cart_id = request.form['cart_id']
         product_id = request.form['product_id']
+        qty = request.form['quantity']
 
-        query = "SELECT customer_id FROM `carts` WHERE cart_id=" + str(cart_id)
-        result = execute_query(db_connection, query).fetchall()
-        customer_id = result[0][0]
-        if cmd == "Remove":
+        if cmd == "Update":
+            print("******************** UPDATING A PRODUCT!!!!!!! ********************")
+            query = "UPDATE `products_carts` SET product_quantity=" + str(qty) + " WHERE cart_id=" + str(cart_id) + " AND product_id=" + str(product_id) + ";"
+            result = execute_query(db_connection, query).fetchall()
+        elif cmd == "Remove":
+            print("******************** DELETING A PRODUCT!!!!!!! ********************")
             # Delete product from cart
             query = "DELETE FROM `products_carts` WHERE cart_id = " + str(cart_id) + " AND product_id = " + str(product_id) + ";"
             result = execute_query(db_connection, query).fetchall()
-        else:
-            # Update product in cart
-            query = "UPDATE `products_carts` SET product_quantity=" + str(qty) + " WHERE cart_id=" + str(cart_id) + " AND product_id=" + str(product_id) + ";"
+        elif cmd == "new_cart":
+            print("******************** NEW CART!!!!!!! ********************")
+            cart_name = request.form['new_cart_name']
+            if customer_id == 0:
+                customer = "NULL"
+            else:
+                customer = customer_id
+            query = "INSERT INTO `carts` (customer_id, cart_name) VALUES (" + str(customer) + ', "' + str(cart_name) + '");'
+            result = execute_query(db_connection, query).fetchall()
+        elif cmd == "make_public":
+            print("******************** MAKING PUBLIC!!!!!!! ********************")
+            # Make customer_id = Null
+            query = "UPDATE `carts` SET customer_id=NULL WHERE cart_id=" + str(cart_id) + ";"
+            result = execute_query(db_connection, query).fetchall()
+        elif cmd == "delete_cart":
+            print("******************** DELETING A CART!!!!!!! ********************")
+            query = "DELETE FROM `carts` WHERE cart_id=" + str(cart_id) + ";"
             result = execute_query(db_connection, query).fetchall()
         return redirect('cart/' + str(customer_id))
 
@@ -172,6 +204,7 @@ def order(cart_id = 1):
                              WHERE cart_id = %s;' % (cart_id)
         get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()[0]
         cust_id = get_cust_id_result
+
 
         # Get all the data from the form
         billing_street = str(request.form['billing-street'])
