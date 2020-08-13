@@ -254,33 +254,52 @@ def order(cart_id = 1):
         return redirect(url_for('home'))
 
 @app.route("/account/")
-@app.route("/account/<int:customer_id>")
+@app.route("/account/<int:customer_id>", methods=['GET', 'POST'])
 def account(customer_id=0):
-    # Will get customer_id based on user input later
-    db_connection = connect_to_database()
+    if request.method == 'GET':
+        db_connection = connect_to_database()
 
-    query = "SELECT customer_id FROM `customers`;"
-    customer_id_result = execute_query(db_connection, query).fetchall()
-    id_set = set()
-    for num in customer_id_result:
-        id_set.add(num[0])
-    if customer_id not in id_set:
-        return render_template("account.html", info=[], orders=[])
+        query = "SELECT customer_id FROM `customers`;"
+        customer_id_result = execute_query(db_connection, query).fetchall()
+        id_set = set()
+        for num in customer_id_result:
+            id_set.add(num[0])
+        if customer_id not in id_set:
+            return render_template("account.html", info=[], orders=[])
 
-    query = ''.join(["SELECT customer_id, fname, lname, email, password, phone_number ",
-    "FROM `customers` WHERE customer_id=",
-    str(customer_id), ";"])
-    result = execute_query(db_connection, query).fetchall()
+        # Get customer info from db
+        query = ''.join(["SELECT customer_id, fname, lname, email, password, phone_number ",
+        "FROM `customers` WHERE customer_id=",
+        str(customer_id), ";"])
+        result = execute_query(db_connection, query).fetchall()
 
-    query = ''.join([
-        "SELECT order_id, billing_street, billing_city, billing_state, billing_zip, ",
-        "shipping_street, shipping_city, shipping_state, shipping_zip, shipped, ",
-        "pickup_or_ship, has_paid, delivered, order_date FROM `orders` WHERE customer_id=",
-        str(customer_id), ";"
-    ])
-    orders = execute_query(db_connection, query).fetchall()
-    print(orders)
-    return render_template("account.html", info=result, orders=orders)
+        # Get order info for the customer from db
+        query = ''.join([
+            "SELECT order_id, billing_street, billing_city, billing_state, billing_zip, ",
+            "shipping_street, shipping_city, shipping_state, shipping_zip, shipped, ",
+            "pickup_or_ship, has_paid, delivered, order_date FROM `orders` WHERE customer_id=",
+            str(customer_id), ";"
+        ])
+        orders = execute_query(db_connection, query).fetchall()
+        
+        # Get items for every order from db
+        order_items = []
+        for order in orders:
+            query = "SELECT products.product_name, order_item.product_quantity \
+            FROM (SELECT order_id FROM `orders` WHERE orders.order_id=" + str(order[0]) + ") AS orders \
+            INNER JOIN `products_orders` AS order_item ON orders.order_id=order_item.order_id \
+            INNER JOIN `products` ON products.product_id=order_item.product_id;"
+
+            order_items_result = execute_query(db_connection, query).fetchall()
+            order_items_list = []
+            for item in order_items_result:
+                order_items_list.append(list(item))
+            order_items.append([order[0], order_items_list])
+        return render_template("account.html", info=result, orders=orders, order_items=order_items)
+    
+    elif request.method == 'POST':
+        # Update account info
+        pass
 
 @app.route("/contact")
 def contact():
