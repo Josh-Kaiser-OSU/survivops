@@ -349,6 +349,16 @@ def admin_add_product():
 
         return redirect(url_for('admin'))  # Redirect user back to the admin page
 
+# Handle updating a product that exists in the database
+@app.route('/admin/update-product/<int:product_id>', methods=['GET', 'PUT'])
+def admin_update_product(product_id):
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        # Create and execute query to get all product info
+        get_prod_info_query = 'SELECT * FROM `products` WHERE product_id = %s;' % (product_id)
+        get_prod_info_result = execute_query(db_connection, get_prod_info_query).fetchone()
+        return render_template('admin-update-product.html', product=get_prod_info_result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

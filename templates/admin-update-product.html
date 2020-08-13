@@ -1,0 +1,62 @@
+{% extends "layouts/main.html" %}
+
+{% block css_file %}
+{{ url_for('static', filename='styles/admin.css') }}
+{% endblock %}
+
+{% block content %}
+<h1>Administrator Dashboard</h1>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">Product Inventory Management</h2>
+    <h3 class="card-subtitle text-muted">Update the current product.</h3>
+    <form action="/admin/update-product/{{ product_id }}" method="PUT" id="update-product-form">
+      <div class="form-group">
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Vendor</th>
+              <th>Price</th>
+              <th>Qty Available</th>
+              <th>Image</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="new-product-name" name="new-product-name" value="{{ product[1] }}" required>
+              </td>
+              <td>
+                <input type="text" id="new-category" name="new-category" value="{{ product[2] }}" required>
+              </td>
+              <td>
+                <input type="text" id="new-vendor" name="new-vendor" value="{{ product[3] }}" required>
+              </td>
+              <td>
+                <input type="text" id="new-price" name="new-price" value="{{ product[4] }}" required>
+              </td>
+              <td>
+                <input type="text" id="new-qty-available" name="new-qty-available" value="{{ product[6] }}" required>
+              </td>
+              <td>
+                <input type="file" id="new-image" name="new-image" accept="image/png, image/jpeg, .webp, .tiff, .tif" value="{{ product[5] }}" required>
+              </td>
+            </tr>
+            <tr>
+              <td id="new-product-cell">
+                <button type="submit" class="btn btn-success">Update</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>  
+  </div>
+</div>
+{% endblock %}
+
+{% block js_file %}
+{{ url_for('static', filename='js/admin.js') }}
+{% endblock %}

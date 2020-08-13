@@ -118,8 +118,12 @@
           <td>{{ product[6] }}</td>
           <td>{{ product[5] }}</td>
           <td>
-            <button type="button" class="update-btn">Update</button>
-            <button type="button" class="delete-btn">Delete</button>
+            <form action="/admin/update-product/{{ product[0] }}" method="GET">
+              <button type="submit" class="btn btn-success update-btn">Update</button>
+            </form>
+            <form action="/admin/delete-product/{{ product[0] }}" method="GET">
+              <button type="submit" class="btn btn-success delete-btn">Delete</button>
+            </form>
           </td>
         </tr>
       {% endfor %}
