@@ -38,10 +38,10 @@
   <div class="card-body">
     <h2 class="card-title">List customer orders</h2>
     <h3 class="card-subtitle text-muted">Enter a customer's ID below to show all orders belonging to the customer.</h3>
-    <form>
+    <form action="/admin/show-orders/" method="POST">
       <div class="form-group">
         <label for="customer-id">Customer ID</label><br>
-        <input type="text" id="customer-id" name="customer-id">
+        <input type="text" id="customer-id" name="customer-id" required>
       </div>
       <button type="submit" class="btn btn-primary" id="customer-search-btn">Search</button>
     </form>
