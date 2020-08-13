@@ -53,7 +53,7 @@
   <div class="card-body">
     <h2 class="card-title">Product Inventory Management</h2>
     <h3 class="card-subtitle text-muted">Add, update, or delete products from the inventory.</h3>
-    <form id="add-new-product-form">
+    <form action="/admin/add-product/" method="POST" id="add-new-product-form">
       <div class="form-group">
         <table>
           <thead>
@@ -89,7 +89,7 @@
             </tr>
             <tr>
               <td id="new-product-cell">
-                <button type="button" class="btn btn-primary" id="new-product-btn">Add product</button>
+                <button type="submit" class="btn btn-success" id="new-product-btn">Add product</button>
               </td>
             </tr>
           </tbody>
