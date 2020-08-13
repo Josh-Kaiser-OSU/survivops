@@ -57,8 +57,9 @@ def home():
         return render_template("index.html", rows=result, categories=categories, filters=[min_price, max_price])
 
 
-@app.route('/signin', methods=['GET', 'POST'])
+@app.route('/signin/', methods=['GET', 'POST'])
 def signin():
+    '''Allow the user to sign in or register as a new customer.'''
     if request.method == 'POST':
         db_connection = connect_to_database()
 
