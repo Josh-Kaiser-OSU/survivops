@@ -82,7 +82,7 @@ def signin():
 
 @app.route('/product/')
 @app.route('/product/<int:product_id>', methods=['GET', 'POST'])
-def product(product_id = 1):
+def product(product_id = 2):
     db_connection = connect_to_database()
     if request.method == 'GET':
         # Get all info for the product with the given product_id

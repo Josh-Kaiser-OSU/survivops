@@ -67,7 +67,7 @@ CREATE TABLE `products` (
    `category` VARCHAR(1000) not NULL,
    `vendor` VARCHAR(1000) not NULL,
    `price` DECIMAL(18,2) not NULL,
-   `image` VARCHAR(255),  -- Will be not NULL later
+   `image` VARCHAR(255),
    `quantity_available` INT(255) not NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -121,7 +121,7 @@ INSERT INTO `carts` (customer_id, cart_name) VALUES
 (2, 'Kayak trip'),
 (2, 'Ski trip'),
 (1, 'Surf trip'),
-(4, 'For John’s BDay');
+(4, 'For Johns BDay');
 UNLOCK TABLES;
 
 --
