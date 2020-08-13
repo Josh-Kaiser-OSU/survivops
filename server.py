@@ -286,22 +286,18 @@ def account(customer_id=0):
 def contact():
     return render_template("contact.html")
 
-@app.route("/admin/", methods=['GET', 'POST'])
+@app.route("/admin/")
 def admin():
     db_connection = connect_to_database()
-    if request.method == 'GET':
-        # Fill out the "Customer List" card on the page
-        # Get all customers from the database
-        get_all_cust_query = 'SELECT * FROM `customers`;'
-        get_all_cust_result = execute_query(db_connection, get_all_cust_query).fetchall()
+    # Fill out the "Customer List" card on the page
+    # Get all customers from the database
+    get_all_cust_query = 'SELECT * FROM `customers`;'
+    get_all_cust_result = execute_query(db_connection, get_all_cust_query).fetchall()
 
-        # Get all products from the database
-        get_all_prod_query = 'SELECT * FROM `products`;'
-        get_all_prod_result = execute_query(db_connection, get_all_prod_query).fetchall()
-        return render_template("admin.html", customers=get_all_cust_result, products=get_all_prod_result)
-
-    elif request.method == 'POST':
-        return "/admin POST request sent."
+    # Get all products from the database
+    get_all_prod_query = 'SELECT * FROM `products`;'
+    get_all_prod_result = execute_query(db_connection, get_all_prod_query).fetchall()
+    return render_template("admin.html", customers=get_all_cust_result, products=get_all_prod_result)
 
 # Handle listing a customer's orders based on the customer ID submitted on the admin page
 @app.route("/admin/show-orders/", methods=['GET', 'POST'])
@@ -313,6 +309,10 @@ def admin_show_orders():
     get_all_ord_result = execute_query(db_connection, get_all_ord_query).fetchall()
     return render_template("admin-show-orders.html", orders=get_all_ord_result)
 
+@app.route("/admin/add-product/", methods=['GET', 'POST'])
+def admin_add_product():
+    if request.method == 'POST':
+        return "In /admin/add-product/ POST handler."
 
 if __name__ == "__main__":
     app.run(debug=True)
