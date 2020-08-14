@@ -133,6 +133,7 @@ def product(product_id = 1):
 @app.route('/cart/<int:customer_id>/<int:cart_id>', methods=['GET', 'POST'])
 def cart(customer_id=0, cart_id=0):
     db_connection = connect_to_database()
+    # If there is no customer make the customer restraint NULL
     if customer_id == 0:
         customer = "customer_id IS NULL"
     else:
@@ -284,7 +285,7 @@ def order(cart_id = 1):
 
 @app.route("/account/")
 @app.route("/account/<int:customer_id>", methods=['GET', 'POST'])
-def account(customer_id=0):
+def account(customer_id=1):
     db_connection = connect_to_database()
     if request.method == 'GET':
         # Get all customer ids to check if user-entered cutomer_id is valid
@@ -383,8 +384,6 @@ def admin_add_product():
 
     # Add a product to the products table
     if request.method == 'POST':
-        for item in request:
-            print(item)
         # Get data from the form
         product_name = request.form['new-product-name']
         category = request.form['new-category']
