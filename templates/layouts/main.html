@@ -6,14 +6,14 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <!-- My CSS -->
         <link rel="stylesheet" href="{% block css_file %}{% endblock %}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     </head>
     <body>
         <!-- Navigation bar -->
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom">
-            <a href="./">
-                <img src="#" alt="Logo">
+            <a href="/">
+                <img id="logo_image" src="{{ url_for('static', filename='images/logo.png') }}" alt="Survivops Logo">
             </a>
-            <h1 class="my-0 mr-md-auto font-weight-normal">Survivops</h1>
             <nav class="my-2 my-md-0 mr-md-3">
                 <a class="p-2 text-dark" href="/signin">Sign In</a>
                 <a class="p-2 text-dark" href="/product">Product</a>
