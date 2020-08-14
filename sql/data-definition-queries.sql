@@ -1,6 +1,4 @@
-
- 
- -- Name: Joshua Kaiser, Timothy Yoon
+-- Name: Joshua Kaiser, Timothy Yoon
 -- Group: 57
 -- Assignment: Project Step 6
 -- File: data-definition-queries.sql
