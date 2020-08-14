@@ -7,6 +7,7 @@
 {% block content %}
 <h1>Checkout</h1>
 
+<!-- Form to place an order for a customer -->
 <form action="/order/{{ cart_id }}" method="POST">
   <div class="container">
     <div class="row">
@@ -141,14 +142,15 @@
                 {% for product in cart_products %}
                 <tr>
                   <td>
-                    <!-- <img src="images/100x100-placeholder.png" alt="Image"> -->
+                    <!-- Product image -->
                     {{ product[0] }}
                   </td>
                   <td>
+                    <!-- Product name -->
                     <p><strong>{{ product[1] }}</strong></p>
                     <p>Vendor: {{ product[2] }}</p>
                     <p>${{ product[3] }}</p>
-                    <p>Qty: {{ product[4] }}</p>    
+                    <p>Qty: {{ product[4] }}</p>
                   </td>
                 </tr>
                 {% endfor %}
@@ -160,7 +162,9 @@
       <!-- Right side of the page -->
       <div class="col-4" id="order-summary-outer">
         <div class="row" id="order-summary-inner">
+          <!-- Where the customer can review the item, shipping/handling, tax, and total prices -->
           <h2>Order Summary</h2>
+          <p>Note: The prices below are sample data.</p>
           <table class="table" id="order-summary-table">
             <tbody>
               <tr>

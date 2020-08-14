@@ -207,7 +207,9 @@ def cart(customer_id=0, cart_id=0):
 @app.route('/order/', methods=['GET', 'POST'])
 @app.route('/order/<int:cart_id>', methods=['GET', 'POST'])
 def order(cart_id = 1):
+    '''Allow a customer to place an order.'''
     db_connection = connect_to_database()
+    # Display all cart items in the "Review items" section of the page
     if request.method == 'GET':
         # Get all rows from the products_carts table with the given cart_id
         prod_in_cart_query = 'SELECT P.image, P.product_name, P.vendor, P.price, PC.product_quantity \
@@ -216,21 +218,21 @@ def order(cart_id = 1):
                               WHERE cart_id = %s;' % (cart_id)
         prod_in_cart_result = execute_query(db_connection, prod_in_cart_query).fetchall()
 
-        # Only render the order template if there are products in the cart
+        # Render the order template only if there are products in the cart; otherwise show an error message
         if prod_in_cart_result:
             return render_template('order.html', cart_products=prod_in_cart_result, cart_id=cart_id)
         else:
             return "The cart with id " + str(cart_id) + " has no products."
 
+    # Add a new entry to the orders and products_orders tables
     if request.method == 'POST':
         # Get the customer's ID
         get_cust_id_query = 'SELECT CU.customer_id \
                              FROM `customers` CU \
                              INNER JOIN `carts` CA ON CA.customer_id = CU.customer_id \
                              WHERE cart_id = %s;' % (cart_id)
-        get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()[0]
+        get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()
         cust_id = get_cust_id_result
-
 
         # Get all the data from the form
         billing_street = str(request.form['billing-street'])
@@ -277,7 +279,7 @@ def order(cart_id = 1):
             products_orders_data = (order_id, tup[0], tup[1])
             execute_query(db_connection, insert_products_orders_query, products_orders_data)
 
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))  # Redirect user to the home page
 
 
 @app.route("/account/")
