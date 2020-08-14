@@ -1,14 +1,12 @@
 -- Name: Joshua Kaiser, Timothy Yoon
 -- Group: 57
--- Assignment: Project Step 4 Draft Version
+-- Assignment: Project Step 6
 -- File: data-manipulation-queries.sql
 -- Description: This file contains SELECT, INSERT, UPDATE and
 --   DELETE queries to let users interact with data.
 
 -- The ‘:’ preceding a variable will be used to denote 
 -- user-entered input
-
--- Note: This file is not yet complete.
 
 -- CREATE
 INSERT INTO `customers` (fname, lname, email, password, phone_number)
