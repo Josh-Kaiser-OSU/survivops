@@ -365,6 +365,8 @@ def admin_show_orders():
 def admin_add_product():
     db_connection = connect_to_database()
     if request.method == 'POST':
+        for item in request:
+            print(item)
         # Get data from the form
         product_name = request.form['new-product-name']
         category = request.form['new-category']
@@ -372,7 +374,7 @@ def admin_add_product():
         price = request.form['new-price']
         qty_available = request.form['new-qty-available']
         image = request.form['new-image']
-
+        
         # Create and execute query to insert a new row into the products table
         add_new_prod_query = 'REPLACE INTO `products` (product_name, category, vendor, price, quantity_available, image) \
                               VALUES (%s, %s, %s, %s, %s, %s);'
