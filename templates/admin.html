@@ -22,6 +22,7 @@
         </tr>
       </thead>
       <tbody>
+      <!-- List all customers from the database -->
       {% for customer in customers %}
         <tr>
           <td>{{ customer[0] }}</td>
@@ -109,14 +110,28 @@
         </tr>
       </thead>
       <tbody>
+      <!-- Display all products from the database -->
       {% for product in products %}
         <tr>
+          <!-- Product Name -->
           <td>{{ product[1] }}</td>
+
+          <!-- Category -->
           <td>{{ product[2] }}</td>
+
+          <!-- Vendor -->
           <td>{{ product[3] }}</td>
+
+          <!-- Price -->
           <td>${{ product[4] }}</td>
+
+          <!-- Qty Available -->
           <td>{{ product[6] }}</td>
+
+          <!-- Image -->
           <td>{{ product[5] }}</td>
+          
+          <!-- Update and delete actions -->
           <td>
             <form action="/admin/update-product/{{ product[0] }}/" method="GET">
               <button type="submit" class="btn btn-success update-btn">Update</button>

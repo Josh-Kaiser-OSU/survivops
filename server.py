@@ -344,8 +344,12 @@ def contact():
 
 @app.route("/admin/")
 def admin():
+    '''
+    Allow administrators to view all a list of all customers and a list of orders by customer ID.
+    Admins can also add, update or delete products from the database.
+    '''
     db_connection = connect_to_database()
-    # Fill out the "Customer List" card on the page
+    # Fill out the "Customer List" section on the page
     # Get all customers from the database
     get_all_cust_query = 'SELECT * FROM `customers`;'
     get_all_cust_result = execute_query(db_connection, get_all_cust_query).fetchall()
@@ -353,24 +357,31 @@ def admin():
     # Get all products from the database
     get_all_prod_query = 'SELECT * FROM `products`;'
     get_all_prod_result = execute_query(db_connection, get_all_prod_query).fetchall()
+
+    # Pass the customers and products into the admin.html template to be displayed
     return render_template("admin.html", customers=get_all_cust_result, products=get_all_prod_result)
 
 
-# Handle listing a customer's orders based on the customer ID submitted on the admin page
 @app.route("/admin/show-orders/", methods=['GET', 'POST'])
 def admin_show_orders():
+    '''List a customer's orders based on the customer ID submitted on the admin page.'''
     db_connection = connect_to_database()
+
     # Get all orders for the given customer_id
     cust_id = str(request.form['customer-id'])
     get_all_ord_query = 'SELECT * FROM `orders` WHERE customer_id = %s;' % (cust_id)
     get_all_ord_result = execute_query(db_connection, get_all_ord_query).fetchall()
+
+    # Pass the orders to the template to be displayed
     return render_template("admin-show-orders.html", orders=get_all_ord_result)
 
 
-# Handle adding a new product to the database from the admin page
 @app.route("/admin/add-product/", methods=['GET', 'POST'])
 def admin_add_product():
+    '''Add a new product to the database from the admin page.'''
     db_connection = connect_to_database()
+
+    # Add a product to the products table
     if request.method == 'POST':
         for item in request:
             print(item)
@@ -391,10 +402,11 @@ def admin_add_product():
         return redirect(url_for('admin'))  # Redirect user back to the admin page
 
 
-# Handle updating a product that exists in the database
 @app.route('/admin/update-product/<int:product_id>/', methods=['GET', 'POST'])
 def admin_update_product(product_id):
+    '''Update a product that exists in the database.'''
     db_connection = connect_to_database()
+
     # Get the existing product info and pass it into a template
     if request.method == 'GET':
         # Create and execute query to get all product info
@@ -411,24 +423,27 @@ def admin_update_product(product_id):
         price = request.form['price']
         qty_available = request.form['qty-available']
         image = request.form['image']
+
         # Create and execute query to update the product
         update_prod_query = 'UPDATE `products` SET product_name = %s, category = %s, vendor = %s, price = %s, image = %s, quantity_available = %s \
                              WHERE product_id = %s;'
         data = (product_name, category, vendor, price, image, qty_available, product_id)
         update_prod_result = execute_query(db_connection, update_prod_query, data)
-        return redirect(url_for('admin'))
+
+        return redirect(url_for('admin'))  # Redirect user back to the admin page
 
 
 @app.route('/admin/delete-product/<int:product_id>/', methods=['GET', 'POST'])
 def admin_delete_product(product_id):
-    '''Delete the specified row from the products table'''
+    '''Delete the specified row from the products table.'''
     db_connection = connect_to_database()
     if request.method == 'POST':
         # Create and execute a query to delete the product
         del_prod_query = 'DELETE FROM `products` WHERE product_id = %s;'
         data = (product_id,)
         del_prod_result = execute_query(db_connection, del_prod_query, data)
-        return redirect(url_for('admin'))
+
+        return redirect(url_for('admin'))  # Redirect user back to the admin page
 
 
 if __name__ == "__main__":

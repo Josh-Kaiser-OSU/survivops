@@ -21,6 +21,7 @@
 </div>
 <div class="card">
   <div class="card-body">
+  <!-- Show orders only if they exist for the customer -->
   {% if orders %}
     <table>
       <thead>
@@ -37,6 +38,7 @@
         </tr>
       </thead>
       <tbody>
+      <!-- Display all orders for the customer -->
       {% for order in orders %}
         <tr>
           <!-- Order ID -->
@@ -93,6 +95,7 @@
       {% endfor %}
       </tbody>
     </table>
+  <!-- Display this text if there are no orders for the customer -->
   {% else %}
     No orders were found for the entered customer ID.
   {% endif %}

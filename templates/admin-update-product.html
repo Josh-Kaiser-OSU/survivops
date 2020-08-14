@@ -25,21 +25,27 @@
           </thead>
           <tbody>
             <tr>
+              <!-- Product name field -->
               <td>
                 <input type="text" id="product-name" name="product-name" value="{{ product[1] }}" required>
               </td>
+              <!-- Category field -->
               <td>
                 <input type="text" id="category" name="category" value="{{ product[2] }}" required>
               </td>
+              <!-- Vendor field -->
               <td>
                 <input type="text" id="vendor" name="vendor" value="{{ product[3] }}" required>
               </td>
+              <!-- Price field -->
               <td>
                 <input type="text" id="price" name="price" value="{{ product[4] }}" required>
               </td>
+              <!-- Quantity available field -->
               <td>
                 <input type="text" id="qty-available" name="qty-available" value="{{ product[6] }}" required>
               </td>
+              <!-- Image field -->
               <td>
                 <input type="file" id="image" name="image" accept="image/png, image/jpeg, .webp, .tiff, .tif" value="{{ product[5] }}" required>
               </td>
