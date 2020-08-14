@@ -121,7 +121,7 @@ INSERT INTO `carts` (customer_id, cart_name) VALUES
 (2, 'Kayak trip'),
 (2, 'Ski trip'),
 (1, 'Surf trip'),
-(4, 'For John’s BDay');
+(4, 'For John BDay');
 UNLOCK TABLES;
 
 --
