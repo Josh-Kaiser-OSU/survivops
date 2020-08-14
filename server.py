@@ -86,7 +86,8 @@ def signin():
 
 @app.route('/product/')
 @app.route('/product/<int:product_id>', methods=['GET', 'POST'])
-def product(product_id = 2):
+def product(product_id = 1):
+    '''View a product and add a selected quantity to a selected cart.'''
     db_connection = connect_to_database()
     if request.method == 'GET':
         # Get all info for the product with the given product_id
@@ -101,6 +102,7 @@ def product(product_id = 2):
         return render_template("product.html", product=product_result, carts=carts_result)
 
     elif request.method == 'POST':
+        # Calculate the quantity of product remaining after the customer adds to the cart
         product_qty_query = 'SELECT quantity_available FROM `products` WHERE product_id = %s;' % (product_id)
         product_qty_result = execute_query(db_connection, product_qty_query).fetchone()[0]
         qty_to_order = int(request.form['quantity-to-order'])
