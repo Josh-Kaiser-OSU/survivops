@@ -10,20 +10,20 @@
     </head>
     <body>
         <!-- Navigation bar -->
-        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom">
+        <nav class="navbar navbar-dark p-3 px-md-4 mb-3">
             <a href="/">
-                <img id="logo_image" src="{{ url_for('static', filename='images/logo.png') }}" alt="Survivops Logo">
+                <img id="logo_image" src="{{ url_for('static', filename='images/logo-v3.png') }}" alt="Survivops Logo">
             </a>
-            <nav class="my-2 my-md-0 mr-md-3">
-                <a class="p-2 text-dark" href="/signin">Sign In</a>
-                <a class="p-2 text-dark" href="/product">Product</a>
-                <a class="p-2 text-dark" href="/cart">Cart</a>
-                <a class="p-2 text-dark" href="/order">Order</a>
-                <a class="p-2 text-dark" href="/account">My Account</a>
-                <a class="p-2 text-dark" href="/contact">Contact</a>
-                <a class="p-2 text-dark" href="/admin">Admin Page</a>
-            </nav>
-        </div>
+            <div class="container" id="navbar-text-container">
+                <a class="navbar-text" href="/signin">Sign In</a>
+                <a class="navbar-text" href="/product">Product</a>
+                <a class="navbar-text" href="/cart">Cart</a>
+                <a class="navbar-text" href="/order">Order</a>
+                <a class="navbar-text" href="/account">My Account</a>
+                <a class="navbar-text" href="/contact">Contact</a>
+                <a class="navbar-text" href="/admin">Admin Page</a>
+            </div>
+        </nav>
         <!-- Remove later -->
         <ul>
             <li><a href="/">Home Page</a> - allows the customer to view all products (products table).</li>

@@ -1,3 +1,24 @@
+body {
+    overflow: scroll;
+}
+
+nav {
+    background-color: #6a6120;
+}
+
+.navbar-text {
+    font-size: 1.2em;
+}
+
+.navbar-text:hover {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
 #logo_image {
     width: 300px;
+}
+
+#navbar-text-container {
+    padding-left: 50px;
 }
