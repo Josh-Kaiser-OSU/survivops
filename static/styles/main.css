@@ -8,6 +8,7 @@ nav {
 
 .navbar-text {
     font-size: 1.2em;
+    margin: 0 0.9em;
 }
 
 .navbar-text:hover {
@@ -17,8 +18,4 @@ nav {
 
 #logo_image {
     width: 300px;
-}
-
-#navbar-text-container {
-    padding-left: 50px;
 }
