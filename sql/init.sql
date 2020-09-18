@@ -6,6 +6,10 @@
 -- generate the database and insert queries to populate the
 -- database with sample data.
 
+CREATE DATABASE IF NOT EXISTS survivops;
+USE survivops;
+
+
 -- =============================================
 -- Create table structures
 -- =============================================
