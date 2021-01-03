@@ -4,10 +4,8 @@ EXPOSE 5000
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY requirements.txt /app
 RUN pip3 install -r requirements.txt
 
-COPY . .
-
-COPY server.py .
-CMD ["python3", "server.py"]
+COPY app.py /app
+CMD ["python3", "app.py"]
