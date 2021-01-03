@@ -12,16 +12,20 @@ def home():
         db_connection = connect_to_database()
         query = "SELECT product_id, product_name, category, vendor, price\
         , image, quantity_available FROM `products`;"
-        result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        result = cursor.fetchall()
         
         # Get all the categories from db
         query = "SELECT category FROM `products`;"
-        category_result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        category_result = cursor.fetchall()
         categories = set()
         for r in category_result:
             categories.add(r[0])
 
         # Render the page
+        cursor.close()
+        db_connection.close()
         return render_template("index.html", rows=result, categories=categories, filters=['',''])
 
     elif request.method == 'POST':
@@ -44,16 +48,20 @@ def home():
             constraints += ' and category="' + str(category) + '"'
         query = "SELECT product_id, product_name, category, vendor, price, image, \
         quantity_available FROM `products`" + constraints + ";"
-        result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        result = cursor.fetchall()
 
         # Get all the categories
         query = "SELECT category FROM `products`;"
-        category_result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        category_result = cursor.fetchall()
         categories = set()
         for r in category_result:
             categories.add(r[0])
         
         # Render the page with the filtered data.
+        cursor.close()
+        db_connection.close()
         return render_template("index.html", rows=result, categories=categories, filters=[min_price, max_price])
 
 
