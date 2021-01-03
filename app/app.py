@@ -171,7 +171,8 @@ def cart(customer_id=0, cart_id=0):
     if request.method == 'GET':
         # Get all carts associated with the customer
         query = "SELECT cart_name, cart_id FROM `carts` WHERE " + customer + ';'
-        cart_result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        cart_result = cursor.fetchall()
         carts = []
         for item in cart_result:
             carts.append([item[0], item[1]])
@@ -190,7 +191,11 @@ def cart(customer_id=0, cart_id=0):
         cart_item.cart_id ",
         "INNER JOIN `products` ON products.product_id = cart_item.product_id ",
         "WHERE carts.cart_id=" + str(cart_id) + ";"])
-        result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        result = cursor.fetchall()
+
+        cursor.close()
+        db_connection.close()
 
         # Render the page
         return render_template("cart.html", carts=carts, cart_id=cart_id, cartitems=result, customer_id=customer_id)
@@ -207,12 +212,14 @@ def cart(customer_id=0, cart_id=0):
             query = "UPDATE `products_carts` SET product_quantity=\
             " + str(qty) + " WHERE cart_id=" + str(cart_id) + " AND \
             product_id=" + str(product_id) + ";"
-            result = execute_query(db_connection, query).fetchall()
+            cursor = execute_query(db_connection, query)
+            result = cursor.fetchall()
         elif cmd == "Remove":
             # Delete product from cart
             query = "DELETE FROM `products_carts` WHERE cart_id = \
             " + str(cart_id) + " AND product_id = " + str(product_id) + ";"
-            result = execute_query(db_connection, query).fetchall()
+            cursor = execute_query(db_connection, query)
+            result = cursor.fetchall()
         elif cmd == "new_cart":
             # Create a new cart with a user-defined name
             cart_name = request.form['new_cart_name']
@@ -222,15 +229,22 @@ def cart(customer_id=0, cart_id=0):
                 customer = customer_id
             query = "INSERT INTO `carts` (customer_id, cart_name) VALUES (\
             " + str(customer) + ', "' + str(cart_name) + '");'
-            result = execute_query(db_connection, query).fetchall()
+            cursor = execute_query(db_connection, query)
+            result = cursor.fetchall()
         elif cmd == "make_public":
             # Make a cart public by setting customer_id = Null
             query = "UPDATE `carts` SET customer_id=NULL WHERE cart_id=" + str(cart_id) + ";"
-            result = execute_query(db_connection, query).fetchall()
+            cursor = execute_query(db_connection, query)
+            result = cursor.fetchall()
         elif cmd == "delete_cart":
             # Delete a cart (cascades to delete the products in products_carts too)
             query = "DELETE FROM `carts` WHERE cart_id=" + str(cart_id) + ";"
-            result = execute_query(db_connection, query).fetchall()
+            cursor = execute_query(db_connection, query)
+            result = cursor.fetchall()
+
+        cursor.close()
+        db_connection.close()
+
         return redirect('cart/' + str(customer_id))
 
 
