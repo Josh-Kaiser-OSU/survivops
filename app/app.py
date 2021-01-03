@@ -344,18 +344,22 @@ def account(customer_id=1):
     if request.method == 'GET':
         # Get all customer ids to check if user-entered cutomer_id is valid
         query = "SELECT customer_id FROM `customers`;"
-        customer_id_result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        customer_id_result = cursor.fetchall()
         id_set = set()
         for num in customer_id_result:
             id_set.add(num[0])
         if customer_id not in id_set:
+            cursor.close()
+            db_connection.close()
             return render_template("account.html", info=[], orders=[])
 
         # Get customer info from db
         query = ''.join(["SELECT customer_id, fname, lname, email, password, phone_number ",
         "FROM `customers` WHERE customer_id=",
         str(customer_id), ";"])
-        result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        result = cursor.fetchall()
 
         # Get order info for the customer from db
         query = ''.join([
@@ -364,7 +368,8 @@ def account(customer_id=1):
             "pickup_or_ship, has_paid, delivered, order_date FROM `orders` WHERE customer_id=",
             str(customer_id), ";"
         ])
-        orders = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        orders = cursor.fetchall()
         
         # Get items for every order from db
         order_items = []
@@ -374,11 +379,16 @@ def account(customer_id=1):
             INNER JOIN `products_orders` AS order_item ON orders.order_id=order_item.order_id \
             INNER JOIN `products` ON products.product_id=order_item.product_id;"
 
-            order_items_result = execute_query(db_connection, query).fetchall()
+            cursor = execute_query(db_connection, query)
+            order_items_result = cursor.fetchall()
             order_items_list = []
             for item in order_items_result:
                 order_items_list.append(list(item))
             order_items.append([order[0], order_items_list])
+        
+        cursor.close()
+        db_connection.close()
+
         return render_template("account.html", info=result, orders=orders, order_items=order_items)
     
     elif request.method == 'POST':
@@ -388,7 +398,12 @@ def account(customer_id=1):
         phone_number = request.form['phone_number']
         query = ''.join(["UPDATE `customers` SET email=" , '"' + str(email) + '"' + ", password=" + '"', str(password),
         '"' + ", phone_number=" + '"' + str(phone_number)+ '"' + " WHERE customer_id=" + str(customer_id) + ";"])
-        result = execute_query(db_connection, query).fetchall()
+        cursor = execute_query(db_connection, query)
+        result = cursor.fetchall()
+
+        cursor.close()
+        db_connection.close()
+
         return redirect('/account/' + str(customer_id))
 
 
