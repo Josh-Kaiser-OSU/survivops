@@ -422,11 +422,16 @@ def admin():
     # Fill out the "Customer List" section on the page
     # Get all customers from the database
     get_all_cust_query = 'SELECT * FROM `customers`;'
-    get_all_cust_result = execute_query(db_connection, get_all_cust_query).fetchall()
+    cursor = execute_query(db_connection, get_all_cust_query)
+    get_all_cust_result = cursor.fetchall()
 
     # Get all products from the database
     get_all_prod_query = 'SELECT * FROM `products`;'
-    get_all_prod_result = execute_query(db_connection, get_all_prod_query).fetchall()
+    cursor = execute_query(db_connection, get_all_prod_query)
+    get_all_prod_result = cursor.fetchall()
+
+    cursor.close()
+    db_connection.close()
 
     # Pass the customers and products into the admin.html template to be displayed
     return render_template("admin.html", customers=get_all_cust_result, products=get_all_prod_result)
@@ -440,7 +445,11 @@ def admin_show_orders():
     # Get all orders for the given customer_id
     cust_id = str(request.form['customer-id'])
     get_all_ord_query = 'SELECT * FROM `orders` WHERE customer_id = %s;' % (cust_id)
-    get_all_ord_result = execute_query(db_connection, get_all_ord_query).fetchall()
+    cursor = execute_query(db_connection, get_all_ord_query)
+    get_all_ord_result = cursor.fetchall()
+
+    cursor.close()
+    db_connection.close()
 
     # Pass the orders to the template to be displayed
     return render_template("admin-show-orders.html", orders=get_all_ord_result)
@@ -465,7 +474,10 @@ def admin_add_product():
         add_new_prod_query = 'REPLACE INTO `products` (product_name, category, vendor, price, quantity_available, image) \
                               VALUES (%s, %s, %s, %s, %s, %s);'
         prod_data = (product_name, category, vendor, price, qty_available, image)  # Gather form data
-        execute_query(db_connection, add_new_prod_query, prod_data)
+        cursor = execute_query(db_connection, add_new_prod_query, prod_data)
+
+        cursor.close()
+        db_connection.close()
 
         return redirect(url_for('admin'))  # Redirect user back to the admin page
 
@@ -479,7 +491,12 @@ def admin_update_product(product_id):
     if request.method == 'GET':
         # Create and execute query to get all product info
         get_prod_info_query = 'SELECT * FROM `products` WHERE product_id = %s;' % (product_id)
-        get_prod_info_result = execute_query(db_connection, get_prod_info_query).fetchone()
+        cursor = execute_query(db_connection, get_prod_info_query)
+        get_prod_info_result = cursor.fetchone()
+
+        cursor.close()
+        db_connection.close()
+
         return render_template('admin-update-product.html', product=get_prod_info_result)
 
     # Update the product using the submitted form
@@ -496,7 +513,10 @@ def admin_update_product(product_id):
         update_prod_query = 'UPDATE `products` SET product_name = %s, category = %s, vendor = %s, price = %s, image = %s, quantity_available = %s \
                              WHERE product_id = %s;'
         data = (product_name, category, vendor, price, image, qty_available, product_id)
-        update_prod_result = execute_query(db_connection, update_prod_query, data)
+        cursor = execute_query(db_connection, update_prod_query, data)
+
+        cursor.close()
+        db_connection.close()
 
         return redirect(url_for('admin'))  # Redirect user back to the admin page
 
@@ -509,7 +529,10 @@ def admin_delete_product(product_id):
         # Create and execute a query to delete the product
         del_prod_query = 'DELETE FROM `products` WHERE product_id = %s;'
         data = (product_id,)
-        del_prod_result = execute_query(db_connection, del_prod_query, data)
+        cursor = execute_query(db_connection, del_prod_query, data)
+
+        cursor.close()
+        db_connection.close()
 
         return redirect(url_for('admin'))  # Redirect user back to the admin page
 
