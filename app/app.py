@@ -260,12 +260,17 @@ def order(cart_id = 1):
                               FROM `products_carts` PC \
                               INNER JOIN `products` P ON PC.product_id = P.product_id \
                               WHERE cart_id = %s;' % (cart_id)
-        prod_in_cart_result = execute_query(db_connection, prod_in_cart_query).fetchall()
+        cursor = execute_query(db_connection, prod_in_cart_query)
+        prod_in_cart_result = cursor.fetchall()
 
         # Render the order template only if there are products in the cart; otherwise show an error message
         if prod_in_cart_result:
+            cursor.close()
+            db_connection.close()
             return render_template('order.html', cart_products=prod_in_cart_result, cart_id=cart_id)
         else:
+            cursor.close()
+            db_connection.close()
             return "The cart with id " + str(cart_id) + " has no products."
 
     # Add a new entry to the orders and products_orders tables
@@ -275,7 +280,8 @@ def order(cart_id = 1):
                              FROM `customers` CU \
                              INNER JOIN `carts` CA ON CA.customer_id = CU.customer_id \
                              WHERE cart_id = %s;' % (cart_id)
-        get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()
+        cursor = execute_query(db_connection, get_cust_id_query)
+        get_cust_id_result = cursor.fetchone()
         cust_id = get_cust_id_result
 
         # Get all the data from the form
@@ -301,12 +307,13 @@ def order(cart_id = 1):
         create_order_query = 'INSERT INTO `orders`(customer_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date) \
                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'
         order_data = (cust_id, billing_street, billing_city, billing_state, billing_zip, shipping_street, shipping_city, shipping_state, shipping_zip, shipped, pickup_or_ship, has_paid, delivered, order_date)
-        execute_query(db_connection, create_order_query, order_data)
+        cursor = execute_query(db_connection, create_order_query, order_data)
 
         # Gather data to insert into the products_orders table
         # Get the last order_id from the orders table, courtesy of https://www.tutorialspoint.com/get-last-entry-in-a-mysql-table
         get_last_order_id_query = 'SELECT order_id FROM `orders` ORDER BY order_id DESC LIMIT 1;'
-        get_last_order_id_result = execute_query(db_connection, get_last_order_id_query).fetchone()[0]
+        cursor = execute_query(db_connection, get_last_order_id_query)
+        get_last_order_id_result = cursor.fetchone()[0]
         order_id = get_last_order_id_result
 
         # Get all product_id and product_quantity values from the products_carts table
@@ -314,14 +321,18 @@ def order(cart_id = 1):
                                  FROM `products_carts` PC \
                                  INNER JOIN `carts` C ON C.cart_id = PC.cart_id \
                                  WHERE C.cart_id = %s;' % (cart_id)
-        get_prod_id_qty_result = execute_query(db_connection, get_prod_id_qty_query).fetchall()
+        cursor = execute_query(db_connection, get_prod_id_qty_query)
+        get_prod_id_qty_result = cursor.fetchall()
 
         # Use each (product_id, product_quantity) tuple in adding a new row to the products_orders table
         for tup in get_prod_id_qty_result:
             insert_products_orders_query = 'INSERT INTO `products_orders`(order_id, product_id, product_quantity) \
                                             VALUES (%s, %s, %s);'
             products_orders_data = (order_id, tup[0], tup[1])
-            execute_query(db_connection, insert_products_orders_query, products_orders_data)
+            cursor = execute_query(db_connection, insert_products_orders_query, products_orders_data)
+
+        cursor.close()
+        db_connection.close()
 
         return redirect(url_for('home'))  # Redirect user to the home page
 
