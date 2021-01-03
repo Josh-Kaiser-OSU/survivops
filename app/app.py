@@ -23,9 +23,10 @@ def home():
         for r in category_result:
             categories.add(r[0])
 
-        # Render the page
         cursor.close()
         db_connection.close()
+
+        # Render the page
         return render_template("index.html", rows=result, categories=categories, filters=['',''])
 
     elif request.method == 'POST':
@@ -59,9 +60,10 @@ def home():
         for r in category_result:
             categories.add(r[0])
         
-        # Render the page with the filtered data.
         cursor.close()
         db_connection.close()
+
+        # Render the page with the filtered data.
         return render_template("index.html", rows=result, categories=categories, filters=[min_price, max_price])
 
 
@@ -83,7 +85,10 @@ def signin():
         query = 'INSERT INTO `customers` (fname, lname, email, password, phone_number) \
                  VALUES (%s, %s, %s, %s, %s);'
         customer_data = (fname, lname, email, password, phone)
-        execute_query(db_connection, query, customer_data)
+        cursor = execute_query(db_connection, query, customer_data)
+
+        cursor.close()
+        db_connection.close()
 
         # Redirect the user to the home page after registering
         return redirect(url_for('home'))
