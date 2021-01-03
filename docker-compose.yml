@@ -1,7 +1,7 @@
 version: "3"
 services:
-  web:
-    build: .
+  app:
+    build: ./app
     ports:
       - "5000:5000"
     links:
@@ -18,4 +18,4 @@ services:
       - "3306:3306"
     command: --init-file /data/application/init.sql
     volumes:
-      - ./sql/init.sql:/data/application/init.sql
+      - ./db/init.sql:/data/application/init.sql
