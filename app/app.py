@@ -105,19 +105,28 @@ def product(product_id = 1):
     if request.method == 'GET':
         # Get all info for the product with the given product_id
         product_query = 'SELECT * FROM `products` WHERE product_id = %s;' % (product_id)
-        product_result = execute_query(db_connection, product_query).fetchone()
+        cursor = execute_query(db_connection, product_query)
+        product_result = cursor.fetchone()
         if product_result == None:
+            cursor.close()
+            db_connection.close()
             return "A product with id " + str(product_id) + " cannot be found."
 
         # Get all carts from the database
         carts_query = 'SELECT * FROM `carts`;'
-        carts_result = execute_query(db_connection, carts_query).fetchall()
+        cursor = execute_query(db_connection, carts_query)
+        carts_result = cursor.fetchall()
+
+        cursor.close()
+        db_connection.close()
+
         return render_template("product.html", product=product_result, carts=carts_result)
 
     elif request.method == 'POST':
         # Calculate the quantity of product remaining after the customer adds to the cart
         product_qty_query = 'SELECT quantity_available FROM `products` WHERE product_id = %s;' % (product_id)
-        product_qty_result = execute_query(db_connection, product_qty_query).fetchone()[0]
+        cursor = execute_query(db_connection, product_qty_query)
+        product_qty_result = cursor.fetchone()[0]
         qty_to_order = int(request.form['quantity-to-order'])
         qty_remaining = product_qty_result - qty_to_order
         cart_id = int(request.form['carts'])
@@ -126,18 +135,25 @@ def product(product_id = 1):
         update_qty_avail_query = 'UPDATE products \
                                   SET quantity_available = %s \
                                   WHERE product_id = %s;' % (qty_remaining, product_id)
-        update_qty_avail_result = execute_query(db_connection, update_qty_avail_query).fetchall()
+        cursor = execute_query(db_connection, update_qty_avail_query)
+        update_qty_avail_result = cursor.fetchall()
 
         # Add the product to the cart
         add_prod_to_cart_query = 'REPLACE INTO products_carts (cart_id, product_id, product_quantity) \
                                   VALUES (%s, %s, %s);' % (cart_id, product_id, qty_to_order)
-        add_prod_to_cart_result = execute_query(db_connection, add_prod_to_cart_query).fetchall()
+        cursor = execute_query(db_connection, add_prod_to_cart_query)
+        add_prod_to_cart_result = cursor.fetchall()
 
         # Get the customer ID associated with the selected cart
         get_cust_id_query = 'SELECT customer_id FROM `carts` WHERE cart_id = %s;' % (cart_id)
-        get_cust_id_result = execute_query(db_connection, get_cust_id_query).fetchone()[0]
+        cursor = execute_query(db_connection, get_cust_id_query)
+        get_cust_id_result = cursor.fetchone()[0]
         if get_cust_id_result == None:
             get_cust_id_result = 0
+
+        cursor.close()
+        db_connection.close()
+
         return redirect(url_for('cart') + str(get_cust_id_result))
 
 
