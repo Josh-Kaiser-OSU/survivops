@@ -1,56 +1,72 @@
-import MySQLdb as mariadb
-from db_credentials import host, user, passwd, db
+# Sources:
+# https://www.mysqltutorial.org/python-mysql-query/
+# https://www.mysqltutorial.org/python-connecting-mysql-databases/
 
-def connect_to_database(host = host, user = user, passwd = passwd, db = db):
-    '''
-    connects to a database and returns a database objects
-    '''
-    db_connection = mariadb.connect(host,user,passwd,db)
-    return db_connection
+
+import mysql.connector
+from mysql.connector import Error
+
+
+def connect_to_database():
+    """
+    Connect to a MySQL database.
+    :return connection: A MySQLConnection object
+    """
+
+    config = {
+        "user": "root",
+        "password": "root",
+        "host": "db",
+        "port": "3306",
+        "database": "survivops"
+    }
+
+    connection = None
+    try:
+        connection = mysql.connector.connect(**config)
+        if connection is not None and connection.is_connected():
+            print("Connected to the MySQL database.")
+            return connection
+    
+    except Error as e:
+        print(e)
+
 
 def execute_query(db_connection = None, query = None, query_params = ()):
-    '''
-    executes a given SQL query on the given db connection and returns a Cursor object
+    """
+    Execute the given SQL query on the given MySQLConnection object.
 
-    db_connection: a MySQLdb connection object created by connect_to_database()
-    query: string containing SQL query
+    :param db_connection: A MySQLConnection object created by connect_to_database()
+    :param query: A string containing the SQL query
+    :param query_params: Parameters for the query
 
-    returns: A Cursor object as specified at https://www.python.org/dev/peps/pep-0249/#cursor-objects.
-    You need to run .fetchall() or .fetchone() on that object to actually acccess the results.
-
-    '''
+    :return cursor: A Cursor object as specified at https://www.python.org/dev/peps/pep-0249/#cursor-objects
+    Run .fetchall() or .fetchone() on the cursor to actually access the results.
+    """
 
     if db_connection is None:
         print("No connection to the database found! Have you called connect_to_database() first?")
         return None
 
     if query is None or len(query.strip()) == 0:
-        print("query is empty! Please pass a SQL query in query")
+        print("The query is empty! Please provide a SQL query.")
         return None
 
     print("Executing %s with %s" % (query, query_params))
-    # Create a cursor to execute query. Why? Because apparently they optimize execution by retaining a reference according to PEP0249
+
+    # Create a cursor to execute the query. Why? Because apparently they optimize execution by retaining a reference according to PEP0249
     cursor = db_connection.cursor()
 
-    '''
+    """
     params = tuple()
-    #create a tuple of paramters to send with the query
+    # Create a tuple of parameters to send with the query
     for q in query_params:
         params = params + (q)
-    '''
-    #TODO: Sanitize the query before executing it!!!
+    """
+    #TODO: Sanitize the query before executing it
+
     cursor.execute(query, query_params)
-    # this will actually commit any changes to the database. without this no
-    # changes will be committed!
+
+    # Commit any changes to the database
     db_connection.commit()
     return cursor
-
-if __name__ == '__main__':
-    print("Executing a sample query on the database using the credentials from db_credentials.py")
-    db = connect_to_database()
-    query = "SELECT * from bsg_people;"
-    results = execute_query(db, query)
-    print("Printing results of %s" % query)
-
-    for r in results.fetchall():
-        print(r)
